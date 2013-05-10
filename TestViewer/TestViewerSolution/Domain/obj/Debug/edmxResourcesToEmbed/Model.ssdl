@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Domain.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DomainStoreContainer">
+    <EntitySet Name="Administrator" EntityType="Domain.Store.Administrator" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Answer" EntityType="Domain.Store.Answer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Candidate" EntityType="Domain.Store.Candidate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CandidateTest" EntityType="Domain.Store.CandidateTest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Choice" EntityType="Domain.Store.Choice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Person" EntityType="Domain.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Question" EntityType="Domain.Store.Question" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="QuestionBank" EntityType="Domain.Store.QuestionBank" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TemplateQuestion" EntityType="Domain.Store.TemplateQuestion" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestInstance" EntityType="Domain.Store.TestInstance" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestTemplate" EntityType="Domain.Store.TestTemplate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestViewer" EntityType="Domain.Store.TestViewer" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Administrator_Person" Association="Domain.Store.FK_Administrator_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Administrator" EntitySet="Administrator" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Answer_CandidateTest" Association="Domain.Store.FK_Answer_CandidateTest">
+      <End Role="CandidateTest" EntitySet="CandidateTest" />
+      <End Role="Answer" EntitySet="Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Answer_Choice" Association="Domain.Store.FK_Answer_Choice">
+      <End Role="Choice" EntitySet="Choice" />
+      <End Role="Answer" EntitySet="Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Candidate_Person" Association="Domain.Store.FK_Candidate_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Candidate" EntitySet="Candidate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateTest_Candidate" Association="Domain.Store.FK_CandidateTest_Candidate">
+      <End Role="Candidate" EntitySet="Candidate" />
+      <End Role="CandidateTest" EntitySet="CandidateTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateTest_TestInstance" Association="Domain.Store.FK_CandidateTest_TestInstance">
+      <End Role="TestInstance" EntitySet="TestInstance" />
+      <End Role="CandidateTest" EntitySet="CandidateTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Choice_Question" Association="Domain.Store.FK_Choice_Question">
+      <End Role="Question" EntitySet="Question" />
+      <End Role="Choice" EntitySet="Choice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_TestViewer" Association="Domain.Store.FK_Person_TestViewer">
+      <End Role="TestViewer" EntitySet="TestViewer" />
+      <End Role="Person" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Question_QuestionBank" Association="Domain.Store.FK_Question_QuestionBank">
+      <End Role="QuestionBank" EntitySet="QuestionBank" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QuestionBank_TestViewer" Association="Domain.Store.FK_QuestionBank_TestViewer">
+      <End Role="TestViewer" EntitySet="TestViewer" />
+      <End Role="QuestionBank" EntitySet="QuestionBank" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TemplateQuestion_Question" Association="Domain.Store.FK_TemplateQuestion_Question">
+      <End Role="Question" EntitySet="Question" />
+      <End Role="TemplateQuestion" EntitySet="TemplateQuestion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TemplateQuestion_TestTemplate" Association="Domain.Store.FK_TemplateQuestion_TestTemplate">
+      <End Role="TestTemplate" EntitySet="TestTemplate" />
+      <End Role="TemplateQuestion" EntitySet="TemplateQuestion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestInstance_Administrator" Association="Domain.Store.FK_TestInstance_Administrator">
+      <End Role="Administrator" EntitySet="Administrator" />
+      <End Role="TestInstance" EntitySet="TestInstance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestInstance_TestTemplate" Association="Domain.Store.FK_TestInstance_TestTemplate">
+      <End Role="TestTemplate" EntitySet="TestTemplate" />
+      <End Role="TestInstance" EntitySet="TestInstance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestTemplate_TestViewer" Association="Domain.Store.FK_TestTemplate_TestViewer">
+      <End Role="TestViewer" EntitySet="TestViewer" />
+      <End Role="TestTemplate" EntitySet="TestTemplate" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="GivenName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Answer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ChoiceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CandidateTestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StudentNumber" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CandidateTest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TestInstanceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CandidateId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+    <Property Name="IsPractice" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Choice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Text" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsCorrect" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TestViewerId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionBankId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Text" Type="varchar(max)" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QuestionBank">
+    <Key>
+      <PropertyRef Name="TestViewerId" />
+    </Key>
+    <Property Name="TestViewerId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TemplateQuestion">
+    <Key>
+      <PropertyRef Name="TestTemplateId" />
+      <PropertyRef Name="QuestionId" />
+    </Key>
+    <Property Name="TestTemplateId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="QuestionId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestInstance">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TemplateId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AdministeredBy" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TokenId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IsPractice" Type="bit" Nullable="false" />
+    <Property Name="TimeLimit" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="TestViewerId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestViewer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DevelopedBy" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Administrator_Person">
+    <End Role="Person" Type="Domain.Store.Person" Multiplicity="1" />
+    <End Role="Administrator" Type="Domain.Store.Administrator" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Administrator">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Answer_CandidateTest">
+    <End Role="CandidateTest" Type="Domain.Store.CandidateTest" Multiplicity="1" />
+    <End Role="Answer" Type="Domain.Store.Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CandidateTest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Answer">
+        <PropertyRef Name="CandidateTestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Answer_Choice">
+    <End Role="Choice" Type="Domain.Store.Choice" Multiplicity="1" />
+    <End Role="Answer" Type="Domain.Store.Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Choice">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Answer">
+        <PropertyRef Name="ChoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Candidate_Person">
+    <End Role="Person" Type="Domain.Store.Person" Multiplicity="1" />
+    <End Role="Candidate" Type="Domain.Store.Candidate" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Candidate">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateTest_Candidate">
+    <End Role="Candidate" Type="Domain.Store.Candidate" Multiplicity="1" />
+    <End Role="CandidateTest" Type="Domain.Store.CandidateTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Candidate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CandidateTest">
+        <PropertyRef Name="CandidateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateTest_TestInstance">
+    <End Role="TestInstance" Type="Domain.Store.TestInstance" Multiplicity="1" />
+    <End Role="CandidateTest" Type="Domain.Store.CandidateTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestInstance">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CandidateTest">
+        <PropertyRef Name="TestInstanceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Choice_Question">
+    <End Role="Question" Type="Domain.Store.Question" Multiplicity="1" />
+    <End Role="Choice" Type="Domain.Store.Choice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Choice">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_TestViewer">
+    <End Role="TestViewer" Type="Domain.Store.TestViewer" Multiplicity="1" />
+    <End Role="Person" Type="Domain.Store.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestViewer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="TestViewerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Question_QuestionBank">
+    <End Role="QuestionBank" Type="Domain.Store.QuestionBank" Multiplicity="1" />
+    <End Role="Question" Type="Domain.Store.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionBank">
+        <PropertyRef Name="TestViewerId" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="QuestionBankId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QuestionBank_TestViewer">
+    <End Role="TestViewer" Type="Domain.Store.TestViewer" Multiplicity="1" />
+    <End Role="QuestionBank" Type="Domain.Store.QuestionBank" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TestViewer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="QuestionBank">
+        <PropertyRef Name="TestViewerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TemplateQuestion_Question">
+    <End Role="Question" Type="Domain.Store.Question" Multiplicity="1" />
+    <End Role="TemplateQuestion" Type="Domain.Store.TemplateQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TemplateQuestion">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TemplateQuestion_TestTemplate">
+    <End Role="TestTemplate" Type="Domain.Store.TestTemplate" Multiplicity="1" />
+    <End Role="TemplateQuestion" Type="Domain.Store.TemplateQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestTemplate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TemplateQuestion">
+        <PropertyRef Name="TestTemplateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestInstance_Administrator">
+    <End Role="Administrator" Type="Domain.Store.Administrator" Multiplicity="1" />
+    <End Role="TestInstance" Type="Domain.Store.TestInstance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrator">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestInstance">
+        <PropertyRef Name="AdministeredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestInstance_TestTemplate">
+    <End Role="TestTemplate" Type="Domain.Store.TestTemplate" Multiplicity="1" />
+    <End Role="TestInstance" Type="Domain.Store.TestInstance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestTemplate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestInstance">
+        <PropertyRef Name="TemplateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestTemplate_TestViewer">
+    <End Role="TestViewer" Type="Domain.Store.TestViewer" Multiplicity="1" />
+    <End Role="TestTemplate" Type="Domain.Store.TestTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestViewer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestTemplate">
+        <PropertyRef Name="TestViewerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

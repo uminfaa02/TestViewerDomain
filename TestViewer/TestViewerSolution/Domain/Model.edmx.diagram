@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ab08a29d60684aa097cff05a581b8630" Name="Diagram1" ZoomLevel="89">
+        <EntityTypeShape EntityType="Domain.Administrator" Width="1.5" PointX="5.125" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Answer" Width="1.5" PointX="10" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Candidate" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.CandidateTest" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Choice" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Person" Width="1.5" PointX="4" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Question" Width="1.5" PointX="8.625" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.QuestionBank" Width="1.5" PointX="8.375" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.TestInstance" Width="1.5" PointX="7.125" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.TestTemplate" Width="1.5" PointX="6.375" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.TestViewer" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="Domain.FK_TestInstance_Administrator" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_Answer_CandidateTest" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_Answer_Choice" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_CandidateTest_Candidate" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_CandidateTest_TestInstance" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_Choice_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_Person_TestViewer" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_Question_QuestionBank" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_QuestionBank_TestViewer" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_TestInstance_TestTemplate" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_TestTemplate_TestViewer" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.TemplateQuestion" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="Domain.Candidate" />
+        <InheritanceConnector EntityType="Domain.Administrator" />
+        <EntityTypeShape EntityType="Domain.PracticeTest" Width="1.5" PointX="1.625" PointY="15.5" IsExpanded="true" />
+        <InheritanceConnector EntityType="Domain.PracticeTest" />
+        <EntityTypeShape EntityType="Domain.ActualTest" Width="1.5" PointX="4.125" PointY="15.5" />
+        <InheritanceConnector EntityType="Domain.ActualTest" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

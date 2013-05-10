@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DomainStoreContainer" CdmEntityContainer="TestViewerEntities">
+    <EntitySetMapping Name="Answers">
+      <EntityTypeMapping TypeName="Domain.Answer">
+        <MappingFragment StoreEntitySet="Answer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+          <ScalarProperty Name="CandidateTestId" ColumnName="CandidateTestId" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CandidateTests">
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.CandidateTest)">
+        <MappingFragment StoreEntitySet="CandidateTest">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+          <ScalarProperty Name="TestInstanceId" ColumnName="TestInstanceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.PracticeTest)">
+        <MappingFragment StoreEntitySet="CandidateTest">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <Condition ColumnName="IsPractice" Value="true" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.ActualTest)">
+        <MappingFragment StoreEntitySet="CandidateTest">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <Condition ColumnName="IsPractice" Value="false" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Choices">
+      <EntityTypeMapping TypeName="Domain.Choice">
+        <MappingFragment StoreEntitySet="Choice">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.Person)">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TestViewerId" ColumnName="TestViewerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.Candidate)">
+        <MappingFragment StoreEntitySet="Candidate">
+          <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Domain.Administrator)">
+        <MappingFragment StoreEntitySet="Administrator">
+          <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="Domain.Question">
+        <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="QuestionBankId" ColumnName="QuestionBankId" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuestionBanks">
+      <EntityTypeMapping TypeName="Domain.QuestionBank">
+        <MappingFragment StoreEntitySet="QuestionBank">
+          <ScalarProperty Name="TestViewerId" ColumnName="TestViewerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestInstances">
+      <EntityTypeMapping TypeName="Domain.TestInstance">
+        <MappingFragment StoreEntitySet="TestInstance">
+          <ScalarProperty Name="TimeLimit" ColumnName="TimeLimit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+          <ScalarProperty Name="AdministeredBy" ColumnName="AdministeredBy" />
+          <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+          <ScalarProperty Name="IsPractice" ColumnName="IsPractice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestTemplates">
+      <EntityTypeMapping TypeName="Domain.TestTemplate">
+        <MappingFragment StoreEntitySet="TestTemplate">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TestViewerId" ColumnName="TestViewerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestViewers">
+      <EntityTypeMapping TypeName="Domain.TestViewer">
+        <MappingFragment StoreEntitySet="TestViewer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DevelopedBy" ColumnName="DevelopedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TemplateQuestion" TypeName="Domain.TemplateQuestion" StoreEntitySet="TemplateQuestion">
+      <EndProperty Name="Question">
+        <ScalarProperty Name="Id" ColumnName="QuestionId" />
+      </EndProperty>
+      <EndProperty Name="TestTemplate">
+        <ScalarProperty Name="Id" ColumnName="TestTemplateId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
