@@ -11,7 +11,11 @@ namespace Domain
 
         public Question FetchQuestion(Guid questionId)
         {
-            return Questions.FirstOrDefault(q => q.Id.Equals(questionId));
+            var result = Questions.FirstOrDefault(q => q.Id.Equals(questionId));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Question with ID '" + questionId + "' does not exist");
         }
 
         public Question CreateQuestion(string text, bool isActive)
@@ -23,11 +27,8 @@ namespace Domain
 
         public void CanQuestionBeModified(Question question)
         {
-            if (question == null)
-                throw new BusinessRuleException("Question does not exists.");
-
             // A list of templates that contain this question
-            List<TestTemplate> templates = question.TestTemplates.ToList();
+            var templates = question.TestTemplates.ToList();
 
             if (templates.Count > 0)
             {
@@ -40,7 +41,6 @@ namespace Domain
                 else
                 {
                     // question only exists in the test template
-                    //TODO: fix me
                     // if false (massege box - question is in the test tamplate only , do you still want to continue)
                     throw new WarningBeforeProceedException("Question has been used in test Template");
                 }
@@ -81,8 +81,8 @@ namespace Domain
         {
             var question = FetchQuestion(questionId);
 
-            if (questionAssociatedWithTemplate(template, question))
-                throw new BusinessRuleException("Question already exists in the test template");  
+            if (question.IsOnTestTemplate(template))
+                throw new RecordAlreadyExistsException("Question already exists in the test template");  
             else
                 question.AddToTemplate(template);    
         }
@@ -91,18 +91,10 @@ namespace Domain
         {
             var question = FetchQuestion(questionId);
 
-            if (questionAssociatedWithTemplate(template, question))
+            if (question.IsOnTestTemplate(template))
                 question.RemoveFromTemplate(template);
             else
-                throw new BusinessRuleException("Question does not exists in the template");    
-        }
-
-        private bool questionAssociatedWithTemplate(TestTemplate template, Question question)
-        {
-            var result = question.TestTemplates.Where(t => t.Id.Equals(template.Id)).ToList();
-            if (result.Count > 0)
-                return true;
-            return false;
+                throw new RecordNotFoundException("Question does not exists in the template");    
         }
 
 

@@ -10,11 +10,11 @@ namespace Domain
     internal partial class Question : IQuestion
     {
 
-        public Question(string text, bool isActive)
+        public Question(string text, bool isActive) : this()
         {
-            if (text.Equals(string.Empty))
+            if (string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text))
             {
-                throw new BusinessRuleException("The question must have text specified");
+                throw new BusinessRuleException("Question cannot be empty or white space.");
             }
             Text = text;
             Active = isActive;
@@ -22,7 +22,19 @@ namespace Domain
 
         public Choice FetchChoice(Guid choiceId)
         {
-            return Choices.FirstOrDefault(c => c.Id.Equals(choiceId));
+            var result = Choices.FirstOrDefault(c => c.Id.Equals(choiceId));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Choice with ID '" + choiceId + "' does not exist");
+        }
+
+        public bool IsOnTestTemplate(TestTemplate template)
+        {
+            var result = TestTemplates.Where(t => t.Id.Equals(template.Id)).First();
+            if (result != null)
+                return true;
+            return false;
         }
 
         public Choice CreateChoice(string text, bool isCorrect)

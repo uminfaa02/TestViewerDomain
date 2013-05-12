@@ -139,3 +139,10 @@ Z:\TestViewer 1.5.6\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramewo
 Z:\TestViewer 1.5.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 Z:\TestViewer 1.5.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
 Z:\TestViewer 1.5.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb

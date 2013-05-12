@@ -69,6 +69,8 @@
     <Compile Include="Choice.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\RecordAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\RecordNotFoundException.cs" />
     <Compile Include="Facade.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="Model.Context.cs">
@@ -89,7 +91,7 @@
     <Compile Include="Partials\ActualTest.cs" />
     <Compile Include="Partials\Administrator.cs" />
     <Compile Include="Partials\Answer.cs" />
-    <Compile Include="Partials\BusinessRuleException.cs" />
+    <Compile Include="Exceptions\BusinessRuleException.cs" />
     <Compile Include="Partials\Candidate.cs" />
     <Compile Include="Partials\CandidateTest.cs" />
     <Compile Include="Partials\CandidateTestActive.cs" />
@@ -113,7 +115,7 @@
     <Compile Include="Interfaces\ITestViewer.cs" />
     <Compile Include="Interfaces\IPracticeTest.cs" />
     <Compile Include="Interfaces\IActualTest.cs" />
-    <Compile Include="Partials\WarningBeforeProceedException.cs" />
+    <Compile Include="Exceptions\WarningBeforeProceedException.cs" />
     <Compile Include="Partials\Person.cs" />
     <Compile Include="Partials\PracticeTest.cs" />
     <Compile Include="Partials\Question.cs" />

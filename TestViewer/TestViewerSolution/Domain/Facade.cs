@@ -25,9 +25,7 @@ namespace Domain
                     .Include("QuestionBank.Questions.Choices")
                     .Include("TestTemplates")
                     .Include("TestTemplates.Questions")
-                    //.Include("TestTemplates.Questions.Choices") // NO NEED
                     .Include("TestTemplates.TestInstances")
-                    //.Include("TestTemplates.TestInstances.CandidateTests")
                     .First();
             }
         }
@@ -61,7 +59,7 @@ namespace Domain
         /// Returns a list of all the candidates that start with the specified number.
         /// </summary>
         /// <param name="studentNumber"></param>
-        /// <returns>IEnumerable<ICandidate></returns>
+        /// <returns>IEnumerable&lt;ICandidate&gt;</returns>
         public IEnumerable<ICandidate> CandidatesStartsWith(string studentNumber)
         {
             return TestViewer.CandidatesStartsWith(studentNumber);
@@ -73,14 +71,15 @@ namespace Domain
         /// </summary>
         public IEnumerable<ICandidate> FetchCandidates(bool onlyActive)
         {
-            return Candidates.Where(a => a.Active.Equals(onlyActive)); 
+            return TestViewer.FetchCandidates(onlyActive);
         }
 
         /// <summary>
         /// Retrieves the student with a matching Student number
         /// </summary>
         /// <param name="studentNumber">Student Number</param>
-        /// <returns>Candidate</returns>
+        /// <returns>ICandidate</returns>
+        /// <exception cref="RecordNotFoundException">If no record found.</exception>
         public ICandidate FetchCandidate(string studentNumber)
         {
             return TestViewer.FetchCandidate(studentNumber);
@@ -101,13 +100,9 @@ namespace Domain
         /// </summary>
         /// <param name="studentNumber"></param>
         /// <exception cref="Domain.BusinessRuleException"></exception>
-        /// <returns>Candidate</returns>
+        /// <returns>ICandidate</returns>
         public ICandidate CreateCandidate(string studentNumber)
         { 
-            if (string.IsNullOrEmpty(studentNumber))
-            {
-                throw new BusinessRuleException("Student number cannot blank.");
-            }
             var result = TestViewer.CreateCandidate(studentNumber);
 
             _context.SaveChanges();
@@ -120,7 +115,7 @@ namespace Domain
         /// <param name="id"></param>
         /// <param name="newStudentNumber"></param>
         /// <param name="active"></param>
-        /// <returns>candidate</returns>
+        /// <returns>ICandidate</returns>
         public ICandidate UpdateCandidate(Guid id, string newStudentNumber, bool active)
         {
             var candidate = TestViewer.UpdateCandidate(id, newStudentNumber, active);
@@ -133,19 +128,20 @@ namespace Domain
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newStudentNumber"></param>
-        /// <returns>Candidate</returns>
+        /// <returns>ICandidate</returns>
         public ICandidate UpdateCandidate(Guid id, string newStudentNumber)
         {
             var candidate = TestViewer.UpdateCandidate(id, newStudentNumber);
             _context.SaveChanges();
             return candidate;
         }
+
         /// <summary>
         /// Updates Candidates statues (True/False)
         /// </summary>
         /// <param name="id"></param>
         /// <param name="active"></param>
-        /// <returns>candidate</returns>
+        /// <returns>ICandidate</returns>
         public ICandidate UpdateCandidate(Guid id, bool active)
         {
             var candidate = TestViewer.UpdateCandidate(id, active);
@@ -156,7 +152,7 @@ namespace Domain
         /// <summary>
         /// Deletes the candidate from the database using the id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="candidateId"></param>
         public void DeleteCandidate(Guid candidateId)
         {
             var candidate = TestViewer.FetchCandidate(candidateId);
@@ -170,9 +166,7 @@ namespace Domain
 
         private void deleteCandidate(Candidate candidate)
         {
-            
             _context.People.Remove(candidate);
-
         }
 
         //TODO: Create a CanBeModified method for Candidate
@@ -183,7 +177,9 @@ namespace Domain
         #region Question Mangement
 
 
-        //A Enumerable List of all questions
+        /// <summary>
+        /// Returns a list of questions
+        /// </summary>
         public IEnumerable<IQuestion> Questions
         {
             get { return TestViewer.Questions; }
@@ -193,7 +189,7 @@ namespace Domain
         /// Returns the question associated with the questionId
         /// </summary>
         /// <param name="questionId"></param>
-        /// <returns>Question</returns>
+        /// <returns>IQuestion</returns>
         public IQuestion FetchQuestion(Guid questionId)
         {
             return TestViewer.FetchQuestion(questionId);
@@ -204,13 +200,9 @@ namespace Domain
         /// </summary>
         /// <param name="text"></param>
         /// <param name="isActive"></param>
-        /// <returns>Question</returns>
-        public IQuestion CreateQuestion(string text, bool isActive)
+        /// <returns>IQuestion</returns>
+        public IQuestion CreateQuestion(string text, bool isActive=true)
         {
-            if (string.IsNullOrEmpty(text))
-            {
-                throw new BusinessRuleException("Question text cannot be blank.");
-            }
             var result = TestViewer.CreateQuestion(text, isActive);
             _context.SaveChanges();
             return result;
@@ -222,8 +214,9 @@ namespace Domain
         /// <param name="questionId"></param>
         /// <param name="text"></param>
         /// <param name="isActive"></param>
-        /// <exception cref="Domain.BusinessRuleException"></exception>
-        /// <returns>Question</returns>
+        /// <param name="ignoreValidation"></param>
+        /// <exception cref="BusinessRuleException"></exception>
+        /// <returns>IQuestion</returns>
         public IQuestion UpdateQuestion(Guid questionId, string text, bool isActive, bool ignoreValidation = false)
         {
             var result = TestViewer.UpdateQuestion(questionId, text, isActive, ignoreValidation);
@@ -312,7 +305,7 @@ namespace Domain
 
         private void deleteQuestionChoice(Choice choice)
         {
-            _context.Entry(choice).State = EntityState.Deleted;
+            _context.Choices.Remove(choice);
         }
 
         #endregion
@@ -338,6 +331,7 @@ namespace Domain
         {
             return TestViewer.FetchTestTemplate(templateId);
         }
+
         /// <summary>
         /// Creates a Test Template
         /// </summary>
@@ -345,10 +339,11 @@ namespace Domain
         /// <returns>ITestTemplate</returns>
         public ITestTemplate CreateTestTemplate(string name)
         {
-            TestTemplate template = TestViewer.CreateTestTemplate(name);
+            var template = TestViewer.CreateTestTemplate(name);
             _context.SaveChanges();
             return template;
         }
+
         /// <summary>
         /// Updates Test Template name
         /// </summary>
@@ -357,17 +352,18 @@ namespace Domain
         /// <returns>ITestTemplate</returns>
         public ITestTemplate UpdateTestTemplate(Guid templateId, string name)
         {
-            TestTemplate template = TestViewer.UpdateTestTemplate(templateId, name);
+            var template = TestViewer.UpdateTestTemplate(templateId, name);
             _context.SaveChanges();
             return template;
         }
+
         /// <summary>
         /// Deletes Test Template, throws exception if its assocciated with a test instance or has questions.
         /// </summary>
         /// <param name="templateId"></param>
         public void DeleteTestTemplate(Guid templateId)
         {
-            TestTemplate template = TestViewer.FetchTestTemplate(templateId);
+            var template = TestViewer.FetchTestTemplate(templateId);
 
             Action action = delegate() { deleteTestTemplate(template); };
 
@@ -380,6 +376,7 @@ namespace Domain
         {
             _context.TestTemplates.Remove(template);
         }
+
         /// <summary>
         /// add or remove question into the test template
         /// </summary>
@@ -399,17 +396,17 @@ namespace Domain
      
         public IEnumerable<ITestInstance> FetchTestInstances(Guid administratorId)
         {
-            return TestViewer.FetchTestInstances(administratorId);
+            return TestViewer.FetchTestInstancesFromAdministrator(administratorId);
         }
 
-        public ITestInstance FetchTestInstance(Guid administratorId, Guid templateId, Guid instanceId)
+        public ITestInstance FetchTestInstance(Guid administratorId, Guid instanceId)
         {
-            return TestViewer.FetchTestInstance(administratorId, templateId, instanceId);
+            return TestViewer.FetchTestInstanceFromAdministrator(administratorId, instanceId);
         }
 
-        public ITestInstance CreateTestInstance(IEnumerable<ICandidate> candidates, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
+        public ITestInstance CreateTestInstance(IEnumerable<Guid> candidateIds, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
         {
-            var result = TestViewer.CreateTestInstance(candidates, administratorId, templateId, isPractice, timeLimit);
+            var result = TestViewer.CreateTestInstance(candidateIds, administratorId, templateId, isPractice, timeLimit);
             _context.SaveChanges();
             return result;
         }

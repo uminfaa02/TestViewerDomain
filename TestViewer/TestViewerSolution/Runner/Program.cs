@@ -16,7 +16,7 @@ namespace Runner
             try
             {
 
-
+                
                 // ADD CANDIDATE
                 //*************************************************************************
                 //facade.CreateCandidate("1");
@@ -48,7 +48,7 @@ namespace Runner
                 //facade.DeleteCandidate(new Guid("de8532d9-4a26-4f0b-b651-cb468295a7f2"));
 
                
-
+   
                 // ADDING NEW QUESTION WITH CHOICES 
                 //*************************************************************************
                 //IQuestion newQuestion = facade.CreateQuestion("What's your mood today?", true);

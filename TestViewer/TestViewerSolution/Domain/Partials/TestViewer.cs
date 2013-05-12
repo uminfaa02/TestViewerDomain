@@ -18,7 +18,11 @@ namespace Domain
 
         public Administrator FetchAdministrator(Guid id)
         {
-            return Administrators.FirstOrDefault(a => a.Id.Equals(id));
+            var result = Administrators.FirstOrDefault(a => a.Id.Equals(id));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Administrator with ID '" + id + "' does not exist");
         }
 
         #endregion
@@ -36,77 +40,96 @@ namespace Domain
 
         public IEnumerable<ICandidate> CandidatesStartsWith(string studentNumber)
         {
-
             return Candidates.Where(s => s.StudentNumber.StartsWith(studentNumber)).AsEnumerable<ICandidate>();
+        }
 
+        public IEnumerable<ICandidate> FetchCandidates(bool onlyActive)
+        {
+            return Candidates.Where(a => a.Active.Equals(onlyActive)); 
         }
 
         public Candidate FetchCandidate(string studentNumber)
-        { 
-            return Candidates.FirstOrDefault(c => c.StudentNumber.Equals(studentNumber));
+        {
+            var result = Candidates.FirstOrDefault(c => c.StudentNumber.Equals(studentNumber));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Candidate with student number '" + studentNumber + "' does not exist");
         }
 
         public Candidate FetchCandidate(Guid id)
         {
-           return Candidates.FirstOrDefault(c => c.Id.Equals(id));        
+            var result = Candidates.FirstOrDefault(c => c.Id.Equals(id));       
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Candidate with ID '" + id + "' does not exist"); 
         }
 
         public Candidate CreateCandidate(string studentNumber)
         {
-            //first we will attempt to find an existing candidate with a matching student number
-            var candidate = FetchCandidate(studentNumber);
-            //If a candidate with a matching number is found simply return the result
-            if (candidate != null)
+            Candidate candidate;
+            try
             {
-                throw new BusinessRuleException("Student number already exists.");
+                FetchCandidate(studentNumber);
+                throw new RecordAlreadyExistsException("Student number already exists.");
             }
-            candidate = new Candidate {StudentNumber = studentNumber};
-            People.Add(candidate);
+            catch (RecordNotFoundException)
+            {
+                candidate = new Candidate(studentNumber);
+                People.Add(candidate);
+            }
             return candidate;
         }
-        
+
+        public void CanCandidateBeModified(Candidate candidate)
+        {
+            if (candidate.CandidateTests.Count <= 0)
+            {
+                throw new BusinessRuleException("Candidate has already been taken an exam. Cannot be modified.");
+            }
+        }
+
         // update candidates number
         public Candidate UpdateCandidate(Guid id, string newStudentNumber)
         {
-
             var candidate = FetchCandidate(id);
             // Candidate exists
-            if (candidate != null) 
+            try
             {
+                //Check if the new student number already exist in the database
+                // If new student number exists, it will throw a RecordNotFoundException
                 var result = FetchCandidate(newStudentNumber);
-                // New student number does not exists.
-                if (result == null)
+                if (!result.Id.Equals(candidate.Id))
                 {
-                    // Update to the new student number
-                    candidate.StudentNumber = newStudentNumber;
+                    throw new RecordAlreadyExistsException("Cannot change current candidate student number with '" +
+                    newStudentNumber + "' because it is already being used by someone.");
                 }
-                else if (candidate.Id != result.Id)
-                    throw new BusinessRuleException("New student number already exists.");
-
-                return candidate;
             }
-            throw new BusinessRuleException("Student number does not exists.");
+            catch (RecordNotFoundException)
+            {
+                // Update with the new student number
+                candidate.StudentNumber = newStudentNumber;
+            }
+            return candidate;
         }
 
         // update candidates student number and statues
         public Candidate UpdateCandidate(Guid id, string newStudentNumber, bool active)
         {
-            var candidate =  UpdateCandidate(id, newStudentNumber);
+            var candidate = UpdateCandidate(id, newStudentNumber);
             candidate.Active = active;
 
             return candidate;
         }
-        // update Candidates statues (true/false)
+
+        // update Candidates status (true/false)
         public Candidate UpdateCandidate(Guid id, bool active)
         {
             var candidate = FetchCandidate(id);
             // Candidate exists
-            if (candidate != null)
-            {
-                    candidate.Active = active;
-                    return candidate;
-                }
-            throw new BusinessRuleException("Student number does not exists.");
+            candidate.Active = active;
+            return candidate;
         }
 
         public void DeleteCandidate(Action action, Candidate candidate)
@@ -123,7 +146,6 @@ namespace Domain
 
 
         }
-
 
 
         #endregion
@@ -189,25 +211,35 @@ namespace Domain
 
         public TestTemplate FetchTestTemplate(Guid templateId)
         {
-            return TestTemplates.FirstOrDefault(t => t.Id.Equals(templateId));
+            var result = TestTemplates.FirstOrDefault(t => t.Id.Equals(templateId));
+            if (result != null)
+                return result;
+            throw new RecordNotFoundException("Test Template with ID '" + templateId + "' does not exist");
         }
 
 
         public TestTemplate FetchTestTemplate(string name)
         {
-            return TestTemplates.FirstOrDefault(t => t.Name.Equals(name));
+            var result = TestTemplates.FirstOrDefault(t => t.Name.Equals(name));
+            if (result != null)
+                return result;
+            throw new RecordNotFoundException("Test Template with name '" + name + "', does not exist");
         }
 
 
         public TestTemplate CreateTestTemplate(string name)
         {
-            var result = FetchTestTemplate(name);
-            if (result != null)
-                throw new BusinessRuleException("Test Template already exists.");
-
-            TestTemplate template = new TestTemplate { Name = name };
-            TestTemplates.Add(template);
-            return template;
+            try
+            {
+                FetchTestTemplate(name);
+                throw new RecordAlreadyExistsException("Test Template with a name '" + name + "' already exists");
+            }
+            catch (RecordNotFoundException)
+            {
+                TestTemplate template = new TestTemplate(name);
+                TestTemplates.Add(template);
+                return template;
+            }
         }
 
         public void CanTemplateBeModified(TestTemplate template)
@@ -218,58 +250,30 @@ namespace Domain
                 throw new BusinessRuleException("Test Template has been used in the Test Instance. Cannot add or remove questions, and delete this template.");
         }
 
-        public TestTemplate UpdateTestTemplate(Guid templateId, string name)
+        public TestTemplate UpdateTestTemplate(Guid templateId, string newName)
         {
-            TestTemplate template = FetchTestTemplate(templateId);
-            if (template == null)
+            var template = FetchTestTemplate(templateId);
+            try
             {
-                throw new BusinessRuleException("Could not find the Test Template using the Template ID " +
-                                                templateId);
+                FetchTestTemplate(newName);
             }
-            template.Name = name;
+            catch (RecordNotFoundException)
+            {
+                template.Name = newName;
+            }
             return template;
         }
 
         public void DeleteTestTemplate(Action action, TestTemplate template)
         {
-
-            if (template == null)
-                    throw new BusinessRuleException("Test Template does not exists");
-
             CanTemplateBeModified(template);
             action();
-                
-            
         }
-
-        //public void AddTemplateQuestion(Guid templateId, Guid questionId)
-        //{
-        //    TestTemplate template = FetchTestTemplate(templateId);
-        //    if (template == null)
-        //        throw new BusinessRuleException("Test Template does not exists");
-
-        //    CanTemplateBeModified(template);
-        //    QuestionBank.AddTemplateQuestion(template, questionId);
-        //}
-
-        //public void RemoveTemplateQuestion(Guid templateId, Guid questionId)
-        //{
-        //    TestTemplate template = FetchTestTemplate(templateId);
-        //    if (template == null)
-        //        throw new BusinessRuleException("Test Template does not exists");
-
-        //    CanTemplateBeModified(template);
-        //    QuestionBank.RemoveTemplateQuestion(template, questionId);
-        //}
 
         public void AddOrRemoveTemplateQuestion(Guid templateId, Guid questionId, AddOrRemoveStatus action)
         {
             var template = FetchTestTemplate(templateId);
-            if (template == null)
-                throw new BusinessRuleException("Test Template does not exists");
-
             CanTemplateBeModified(template);
-
             if (action == AddOrRemoveStatus.Add)
             {
                 QuestionBank.AddTemplateQuestion(template, questionId);
@@ -278,36 +282,72 @@ namespace Domain
             {
                 QuestionBank.RemoveTemplateQuestion(template, questionId);
             }
-           
         }
 
         #endregion
 
         #region Test Instance Management
 
-        public List<TestInstance> FetchTestInstances(Guid administratorId)
+
+        public List<TestInstance> FetchTestInstancesFromAdministrator(Guid administratorId)
         {
             return FetchAdministrator(administratorId).TestInstances.ToList();
         }
 
-        // Gets all Test Instance for that Administrator
-        public TestInstance FetchTestInstance(Guid administratorId, Guid templateId, Guid instanceId)
+        public TestInstance FetchTestInstanceFromAdministrator(Guid administratorId, Guid instanceId)
         {
-            return FetchAdministrator(administratorId).TestInstances.Where(i => i.Id.Equals(instanceId)).First();
+            return FetchAdministrator(administratorId).FetchTestInstance(instanceId);
         }
 
-        //Gets a Specific Test Instance 
-        public TestInstance FetchTestInstance(Guid templateId, Guid instanceId)
+        public TestInstance FetchTestInstanceFromTestTemplate(Guid templateId, Guid instanceId)
         {
             return FetchTestTemplate(templateId).FetchTestInstance(instanceId);
         }
 
-        //Creates a Test Instance 
-        public TestInstance CreateTestInstance(IEnumerable<ICandidate> candidates, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
+        public TestInstance CreateTestInstance(IEnumerable<Guid> candidateIds, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
         {
+            List<Candidate> candidates = new List<Candidate>();
+            foreach (var candidateId in candidateIds)
+            {
+                var result = FetchCandidate(candidateId);
+                if (result != null)
+                    candidates.Add(result);
+            }
             return FetchTestTemplate(templateId).CreateTestInstance(candidates, administratorId, isPractice, timeLimit);
         }
 
+        public TestInstance UpdateTestInstance(Guid currentTemplateId, Guid instanceId, Guid newTemplateId, bool isPractice, int timeLimit)
+        {
+            var result = FetchTestTemplate(currentTemplateId).FetchTestInstance(instanceId);
+            if (result != null)
+            {
+                var newTestTemplate = FetchTestTemplate(newTemplateId);
+                if (newTestTemplate != null)
+                {
+                    result.TestTemplate = newTestTemplate;
+                    result.IsPractice = isPractice;
+                    result.TimeLimit = timeLimit;
+                    return result;
+                }
+                throw new RecordNotFoundException("New Test Template does not exist");
+            }
+            throw new RecordNotFoundException("Test Instance does not exist");
+        }
+
+        // TODO: Continue refactoring 
+        public TestInstance AddCandidateToTestInstance(Guid currentTemplateId, Guid instanceId, IEnumerable<Guid> candidateIds)
+        {
+            var result = FetchTestInstanceFromTestTemplate(currentTemplateId, instanceId);
+            return null;
+        }
+
+        public TestInstance RemoveCandidateFromTestInstance(Guid currentTemplateId, Guid instanceId, IEnumerable<Guid> candidateIds)
+        {
+            var result = FetchTestInstanceFromTestTemplate(currentTemplateId, instanceId);
+            return null;
+        }
+
+        // THIS IS THE OLD VERSION, NEVER USE THIS ONE ANYMORE, INSTEAD, USE THE ONE ABOVE.
         public TestInstance UpdateTestInstance(Guid templateId, Guid testInstanceId, bool isPractice, int timeLimit)
         {
             var testInstance = FetchTestTemplate(templateId).FetchTestInstance(testInstanceId);

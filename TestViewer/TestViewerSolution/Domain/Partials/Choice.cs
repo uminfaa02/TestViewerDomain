@@ -11,6 +11,9 @@ namespace Domain
 
         public Choice(string text, bool isCorrect) : this()
         {
+            if (string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text))
+                throw new BusinessRuleException("Choice cannot be empty or white space");
+
             Text = text;
             IsCorrect = isCorrect;
         }
