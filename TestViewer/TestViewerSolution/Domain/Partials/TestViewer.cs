@@ -38,14 +38,25 @@ namespace Domain
             }
         }
 
-        public IEnumerable<ICandidate> CandidatesStartsWith(string studentNumber)
+        public List<Candidate> CandidatesStartsWith(string studentNumber)
         {
-            return Candidates.Where(s => s.StudentNumber.StartsWith(studentNumber)).AsEnumerable<ICandidate>();
+            return Candidates.Where(s => s.StudentNumber.StartsWith(studentNumber)).ToList();
         }
 
-        public IEnumerable<ICandidate> FetchCandidates(bool onlyActive)
+        public List<Candidate> FetchCandidates(IEnumerable<Guid> candidateIds)
         {
-            return Candidates.Where(a => a.Active.Equals(onlyActive)); 
+            var candidates = new List<Candidate>();
+            foreach (var candidateId in candidateIds)
+            {
+                var result = FetchCandidate(candidateId);
+                candidates.Add(result);
+            }
+            return candidates;
+        }
+
+        public List<Candidate> FetchCandidates(bool onlyActive)
+        {
+            return Candidates.Where(a => a.Active.Equals(onlyActive)).ToList(); 
         }
 
         public Candidate FetchCandidate(string studentNumber)
@@ -85,15 +96,14 @@ namespace Domain
         public void CanCandidateBeModified(Candidate candidate)
         {
             if (candidate.CandidateTests.Count <= 0)
-            {
                 throw new BusinessRuleException("Candidate has already been taken an exam. Cannot be modified.");
-            }
         }
 
         // update candidates number
         public Candidate UpdateCandidate(Guid id, string newStudentNumber)
         {
             var candidate = FetchCandidate(id);
+            CanCandidateBeModified(candidate);
             // Candidate exists
             try
             {
@@ -127,6 +137,7 @@ namespace Domain
         public Candidate UpdateCandidate(Guid id, bool active)
         {
             var candidate = FetchCandidate(id);
+            CanCandidateBeModified(candidate);
             // Candidate exists
             candidate.Active = active;
             return candidate;
@@ -134,17 +145,9 @@ namespace Domain
 
         public void DeleteCandidate(Action action, Candidate candidate)
         {
-            //TODO: Put Check for Test Instance before deleting Candidate 
-            if (candidate != null)
-            {
-                action();
-            }
-            else
-            {
-                throw new BusinessRuleException("Candidate Id Not found");
-            }
-
-
+            //TODO: (DONE) Put Check for Test Instance before deleting Candidate 
+            CanCandidateBeModified(candidate);
+            action();
         }
 
 
@@ -306,61 +309,37 @@ namespace Domain
 
         public TestInstance CreateTestInstance(IEnumerable<Guid> candidateIds, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
         {
-            List<Candidate> candidates = new List<Candidate>();
-            foreach (var candidateId in candidateIds)
-            {
-                var result = FetchCandidate(candidateId);
-                if (result != null)
-                    candidates.Add(result);
-            }
-            return FetchTestTemplate(templateId).CreateTestInstance(candidates, administratorId, isPractice, timeLimit);
+            return FetchTestTemplate(templateId).CreateTestInstance(FetchCandidates(candidateIds), administratorId, isPractice, timeLimit);
         }
 
         public TestInstance UpdateTestInstance(Guid currentTemplateId, Guid instanceId, Guid newTemplateId, bool isPractice, int timeLimit)
         {
-            var result = FetchTestTemplate(currentTemplateId).FetchTestInstance(instanceId);
-            if (result != null)
-            {
-                var newTestTemplate = FetchTestTemplate(newTemplateId);
-                if (newTestTemplate != null)
-                {
-                    result.TestTemplate = newTestTemplate;
-                    result.IsPractice = isPractice;
-                    result.TimeLimit = timeLimit;
-                    return result;
-                }
-                throw new RecordNotFoundException("New Test Template does not exist");
-            }
-            throw new RecordNotFoundException("Test Instance does not exist");
+            var newTestTemplate = FetchTestTemplate(newTemplateId);
+            return FetchTestTemplate(currentTemplateId).UpdateTestInstance(instanceId, newTestTemplate, isPractice, timeLimit);
         }
 
-        // TODO: Continue refactoring 
-        public TestInstance AddCandidateToTestInstance(Guid currentTemplateId, Guid instanceId, IEnumerable<Guid> candidateIds)
+        public TestInstance AddCandidateToTestInstance(Guid currentTemplateId, Guid instanceId, Guid candidateId)
         {
             var result = FetchTestInstanceFromTestTemplate(currentTemplateId, instanceId);
-            return null;
+            result.CreateCandidateTest(FetchCandidate(candidateId));
+
+            return result;
         }
 
-        public TestInstance RemoveCandidateFromTestInstance(Guid currentTemplateId, Guid instanceId, IEnumerable<Guid> candidateIds)
+        public void DeleteCandidateTest(Action action, Guid templateId, Guid instanceId, CandidateTest candidateTest)
         {
-            var result = FetchTestInstanceFromTestTemplate(currentTemplateId, instanceId);
-            return null;
-        }
-
-        // THIS IS THE OLD VERSION, NEVER USE THIS ONE ANYMORE, INSTEAD, USE THE ONE ABOVE.
-        public TestInstance UpdateTestInstance(Guid templateId, Guid testInstanceId, bool isPractice, int timeLimit)
-        {
-            var testInstance = FetchTestTemplate(templateId).FetchTestInstance(testInstanceId);
-            testInstance.IsPractice = isPractice;
-            testInstance.TimeLimit = timeLimit;
-            
-
-            return testInstance;
+            var testInstance = FetchTestInstanceFromTestTemplate(templateId, instanceId);
+            testInstance.DeleteCandidateTest(action, candidateTest);
         }
 
         #endregion
 
         #region Candidate Test Management
+
+        public CandidateTest FetchCandidateTest(Guid templateId, Guid instanceId, Guid candidateId)
+        {
+            return FetchTestInstanceFromTestTemplate(templateId, instanceId).FetchCandidateTest(candidateId);
+        }
 
         #endregion
 

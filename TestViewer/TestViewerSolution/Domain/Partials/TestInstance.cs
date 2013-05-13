@@ -8,20 +8,27 @@ namespace Domain
 {
     internal partial class TestInstance : ITestInstance
     {
-        //private CandidateTest candidateTest;
 
         public TestInstance(Guid administratorId, bool isPractice, int timeLimit)
             : this()
         {
             AdministeredBy = administratorId;
             IsPractice = isPractice;
-            TimeLimit = timeLimit;
-            
+            TimeLimit = timeLimit;            
+        }
 
-            //if (IsPractice)
-            //    candidateTest = new PracticeTest();
-            //else
-            //    candidateTest = new ActualTest(); 
+        public CandidateTest FetchCandidateTest(Guid id)
+        {
+            var result = CandidateTests.FirstOrDefault(c => c.CandidateId.Equals(id));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Candidate Test with ID '" + id + "' does not exist");
+        }
+
+        public CandidateTest FetchCandidateTest(Candidate candidate)
+        {
+            return FetchCandidateTest(candidate.Id);
         }
 
         public CandidateTest CreateCandidateTest(Candidate candidate)
@@ -33,24 +40,25 @@ namespace Domain
             else
                 candidateTest = new ActualTest(candidate); 
 
-            //candidateTest.Candidate = candidate;
             CandidateTests.Add(candidateTest);
             return candidateTest;
         }
 
-        //public ActualTest CreateActualTest(Candidate candidate)
-        //{
-        //    var test = new ActualTest(this,candidate);
-        //    this.CandidateTests.Add(test);
-        //    return test; 
-        //}
+        public void CanCandidateTestBeDeleted(CandidateTest candidateTest)
+        {
+            // If State is Active or Closed, Can only be modified when state is Scheduled
+            if (candidateTest.StateId != 1)
+                throw new BusinessRuleException("CandidateTest with Student Number '" + candidateTest.Candidate.StudentNumber + "' " +
+                    "cannot be removed from Test Instance because the candidate has already been taking or finished the exam.");
+        }
 
-        //public PracticeTest CreatePracticeTest(Candidate candidate)
-        //{
-        //    var test = new PracticeTest(this, candidate);
-        //    this.CandidateTests.Add(test);
-        //    return test;
-        //}
+
+        public void DeleteCandidateTest(Action action, CandidateTest candidateTest)
+        {
+            //TODO: (DONE) Check before deleting candidateTest
+            CanCandidateTestBeDeleted(candidateTest);
+            action();
+        }
 
         public bool DeleteAllowed
         {

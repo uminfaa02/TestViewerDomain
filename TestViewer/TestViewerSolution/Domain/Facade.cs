@@ -169,7 +169,7 @@ namespace Domain
             _context.People.Remove(candidate);
         }
 
-        //TODO: Create a CanBeModified method for Candidate
+        //TODO: (DONE) Create a CanBeModified method for Candidate
 
 
         #endregion // done
@@ -411,24 +411,43 @@ namespace Domain
             return result;
         }
 
-        public ITestInstance UpdateTestInstance(Guid adminitratorId, Guid templateId, bool isPractice, int timeLimit)
+        public ITestInstance UpdateTestInstance(Guid templateId, Guid instanceId, Guid newTestTemplate, bool isPractice, int timeLimit)
         {
-            var result = TestViewer.UpdateTestInstance(adminitratorId, templateId, isPractice, timeLimit);
+            var result = TestViewer.UpdateTestInstance(templateId, instanceId, newTestTemplate, isPractice, timeLimit);
 
             _context.SaveChanges();
             return result;
-            
-
         }
+
 
         #endregion
 
         #region Candidate Test Management
-        
-        //public ICandidateTest CreateActualTest(string studentId, Guid templateId, Guid instanceId)
-        //{
-        //    return TestViewer.CreateActualTest(studentId, templateId, instanceId);
-        //}
+
+        public ICandidateTest AddCandidateToTestInstance(Guid templateId, Guid instanceId, Guid candidateId)
+        {
+            var testInstance = TestViewer.FetchTestInstanceFromTestTemplate(templateId, instanceId);
+            var candidate = TestViewer.FetchCandidate(candidateId);
+            var result = testInstance.CreateCandidateTest(candidate);
+
+            _context.SaveChanges();
+
+            return result;
+        }
+
+        public void RemoveCandidateFromTestInstance(Guid templateId, Guid instanceId, Guid candidateId)
+        {
+            var candidateTest = TestViewer.FetchTestInstanceFromTestTemplate(templateId, instanceId).FetchCandidateTest(candidateId);
+            Action deleteAction = delegate() { deleteCandidateTest(candidateTest); };
+            TestViewer.DeleteCandidateTest(deleteAction, templateId, instanceId, candidateTest);
+
+            _context.SaveChanges();
+        }
+
+        private void deleteCandidateTest(CandidateTest candidateTest)
+        {
+            _context.CandidateTests.Remove(candidateTest);
+        }
 
         #endregion
 

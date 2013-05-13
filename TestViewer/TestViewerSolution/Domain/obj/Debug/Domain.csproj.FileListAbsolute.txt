@@ -146,3 +146,4 @@ C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\E
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache

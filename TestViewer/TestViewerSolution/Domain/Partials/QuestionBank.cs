@@ -62,13 +62,9 @@ namespace Domain
 
         public void DeleteQuestion(Action action, Question question)
         {
-            //TODO: Put Check for Test Instance before deleting question
-         
-            if (question == null)
-            {
-                throw new BusinessRuleException("Could not find question with Question ID " + question);
-            } 
-                action();    
+            //TODO:(DONE) Put Check for Test Instance before deleting question 
+            CanQuestionBeModified(question);
+            action();    
         }
 
         public void DeleteQuestionChoice(Action action, Choice choice)

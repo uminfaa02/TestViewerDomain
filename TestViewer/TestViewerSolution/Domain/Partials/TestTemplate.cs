@@ -44,6 +44,26 @@ namespace Domain
             return testInstance;
         }
 
+        public TestInstance UpdateTestInstance(Guid instanceId, TestTemplate newTestTemplate, bool isPractice, int timeLimit)
+        {
+            var result = FetchTestInstance(instanceId);
+
+            result.TestTemplate = newTestTemplate;
+            result.IsPractice = isPractice;
+            result.TimeLimit = timeLimit;
+            return result;
+        }
+
+        public void CanTestInstanceBeModified(Guid instanceId)
+        {
+            throw new NotImplementedException("We need to add a new field in the database called IsOpen " +
+            "If the TestInstance is OPEN and All candidate test states are SCHEDULED, It can be modified" +
+            "else, Cannot be.");
+            //TODO: We need to add a new field in the database called IsOpen
+            // If the TestInstance is OPEN and All candidate test states are SCHEDULED, It can be modified
+            // else, Cannot be.
+        }
+
 
         #region ITestTemplate Members
 
