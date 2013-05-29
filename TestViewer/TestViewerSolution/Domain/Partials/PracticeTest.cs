@@ -15,5 +15,14 @@ namespace Domain
         {
         }
 
+        #region IPracticeTest Members
+        
+        public new IEnumerable<IAnswer> Answers
+        {
+            get { return Answers.AsEnumerable<IAnswer>(); }
+        }
+
+        #endregion
+
     }
 }

@@ -5,7 +5,14 @@ using System.Text;
 
 namespace Domain
 {
-    public interface IPracticeTest
+    /// <summary>
+    /// An Interface that contains Candidate Test details
+    /// </summary>
+    public interface IPracticeTest : ICandidateTest
     {
+        /// <summary>
+        /// Collection of answers that is associated with the candidate test
+        /// </summary>
+        IEnumerable<IAnswer> Answers { get; }
     }
 }

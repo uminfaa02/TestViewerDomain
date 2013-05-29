@@ -16,9 +16,35 @@ namespace Domain
             {
                 throw new BusinessRuleException("Question cannot be empty or white space.");
             }
+            
             Text = text;
             Active = isActive;
         }
+
+        public bool Isvalid
+        {
+            get {  return (Choices.Count > 1) && (Choices.FirstOrDefault(c => c.IsCorrect) != null); }
+        }
+
+        public bool IsBeingUsedInTestInstance
+        {
+            get 
+            {
+                return TestTemplates.FirstOrDefault(t => t.IsBeingUsedInTestInstance) != null ? true : false;
+            }
+        }
+
+        public bool IsInTestTemplate(TestTemplate template)
+        {
+            return TestTemplates.FirstOrDefault(t => t.Id.Equals(template.Id)) != null ? true : false;
+        }
+
+        public bool IsBeingUsedInTestTemplate
+        {
+            get { return TestTemplates.Count > 0; }
+        }
+
+        #region Question Choice
 
         public Choice FetchChoice(Guid choiceId)
         {
@@ -29,12 +55,13 @@ namespace Domain
             throw new RecordNotFoundException("Choice with ID '" + choiceId + "' does not exist");
         }
 
-        public bool IsOnTestTemplate(TestTemplate template)
+        public Choice FetchChoice(string text)
         {
-            var result = TestTemplates.Where(t => t.Id.Equals(template.Id)).First();
+            var result = Choices.FirstOrDefault(c => c.Text.Equals(text));
             if (result != null)
-                return true;
-            return false;
+                return result;
+
+            throw new RecordNotFoundException("Choice with text '" + text + "' does not exist");
         }
 
         public Choice CreateChoice(string text, bool isCorrect)
@@ -47,10 +74,7 @@ namespace Domain
         public Choice UpdateChoice(Guid choiceId, string text, bool isCorrect)
         {
             var choice = FetchChoice(choiceId);
-            if (choice == null)
-            {
-                throw new BusinessRuleException("Could not find choice in the given question");
-            }
+
             choice.Text = text;
             choice.IsCorrect = isCorrect;
 
@@ -62,6 +86,11 @@ namespace Domain
             action();
         }
 
+        #endregion
+
+
+        #region Test Template
+
         public void AddToTemplate(TestTemplate template)
         {
             TestTemplates.Add(template);
@@ -71,6 +100,17 @@ namespace Domain
         {
             TestTemplates.Remove(template);
         }
+
+        public void RemoveFromAllTemplate()
+        {
+            foreach (var template in TestTemplates)
+            {
+                RemoveFromTemplate(template);
+            }
+        }
+
+        #endregion
+
 
         #region IQuestion Members
 

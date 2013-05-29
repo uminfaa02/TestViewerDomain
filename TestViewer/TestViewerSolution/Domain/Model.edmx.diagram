@@ -6,21 +6,25 @@
     <edmx:Diagrams>
       <Diagram DiagramId="ab08a29d60684aa097cff05a581b8630" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="Domain.Administrator" Width="1.5" PointX="5.125" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Domain.Answer" Width="1.5" PointX="10" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Answer" Width="1.5" PointX="9" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Domain.Candidate" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Domain.CandidateTest" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Domain.Choice" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Domain.Person" Width="1.5" PointX="4" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.CandidateTest" Width="1.5" PointX="2.625" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Choice" Width="1.5" PointX="9.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.Person" Width="1.5" PointX="4" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Domain.Question" Width="1.5" PointX="8.625" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Domain.QuestionBank" Width="1.5" PointX="8.375" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Domain.TestInstance" Width="1.5" PointX="7.125" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.TestInstance" Width="1.5" PointX="7.375" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Domain.TestTemplate" Width="1.5" PointX="6.375" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Domain.TestViewer" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
         <AssociationConnector Association="Domain.FK_TestInstance_Administrator" ManuallyRouted="false" />
         <AssociationConnector Association="Domain.FK_Answer_CandidateTest" ManuallyRouted="false" />
         <AssociationConnector Association="Domain.FK_Answer_Choice" ManuallyRouted="false" />
         <AssociationConnector Association="Domain.FK_CandidateTest_Candidate" ManuallyRouted="false" />
-        <AssociationConnector Association="Domain.FK_CandidateTest_TestInstance" ManuallyRouted="false" />
+        <AssociationConnector Association="Domain.FK_CandidateTest_TestInstance" ManuallyRouted="true" >
+          <ConnectorPoint PointX="8.125" PointY="13.1244921875" />
+          <ConnectorPoint PointX="8.125" PointY="15.09234460886173" />
+          <ConnectorPoint PointX="4.125" PointY="15.09234460886173" />
+        </AssociationConnector>
         <AssociationConnector Association="Domain.FK_Choice_Question" ManuallyRouted="false" />
         <AssociationConnector Association="Domain.FK_Person_TestViewer" ManuallyRouted="false" />
         <AssociationConnector Association="Domain.FK_Question_QuestionBank" ManuallyRouted="false" />
@@ -30,11 +34,13 @@
         <AssociationConnector Association="Domain.TemplateQuestion" ManuallyRouted="false" />
         <InheritanceConnector EntityType="Domain.Candidate" />
         <InheritanceConnector EntityType="Domain.Administrator" />
-        <EntityTypeShape EntityType="Domain.PracticeTest" Width="1.5" PointX="1.625" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domain.PracticeTest" Width="1.5" PointX="1.625" PointY="16.5" IsExpanded="true" />
         <InheritanceConnector EntityType="Domain.PracticeTest" />
-        <EntityTypeShape EntityType="Domain.ActualTest" Width="1.5" PointX="4.125" PointY="15.5" />
+        <EntityTypeShape EntityType="Domain.ActualTest" Width="1.5" PointX="3.75" PointY="16.5" />
         <InheritanceConnector EntityType="Domain.ActualTest" />
-      </Diagram>
+        <EntityTypeShape EntityType="Domain.User" Width="1.5" PointX="5.125" PointY="12.625" />
+        <AssociationConnector Association="Domain.FK_Administrator_Users" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

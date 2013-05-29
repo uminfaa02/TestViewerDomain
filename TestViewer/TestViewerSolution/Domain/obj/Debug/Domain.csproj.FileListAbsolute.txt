@@ -147,3 +147,79 @@ C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\bin\Debug\E
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.XML
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.XML
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.XML
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.XML
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.CodeAnalysisLog.xml
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.lastcodeanalysissucceeded

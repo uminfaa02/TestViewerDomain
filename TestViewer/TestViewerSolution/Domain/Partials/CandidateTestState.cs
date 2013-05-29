@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal abstract class CandidateTestState : ICandidateTestState
+    internal abstract class CandidateTestState
     {
-        public abstract void DoSomething();
         public abstract void Activate(CandidateTest test);
+        public abstract void Start(CandidateTest test);
         public abstract void Close(CandidateTest test); 
 
     }

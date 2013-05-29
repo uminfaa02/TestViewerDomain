@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Domain
 {
-    public interface IActualTest
+    /// <summary>
+    /// An Interface that represents an Actual Candidate Test
+    /// </summary>
+    public interface IActualTest : ICandidateTest
     {
+        
     }
 }

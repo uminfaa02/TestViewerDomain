@@ -128,3 +128,97 @@ C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Runner\bin\Debug\E
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
 C:\Users\George\Desktop\gittest\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\temp\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\Users\p411\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+Z:\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewerDomain-master\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+Z:\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.5.8\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.xml
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.xml
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.xml
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+Z:\TestViewer 1.5.9\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe.config
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.exe
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Runner.pdb
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\Domain.xml
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Runner\obj\Debug\Runner.csprojResolveAssemblyReference.cache

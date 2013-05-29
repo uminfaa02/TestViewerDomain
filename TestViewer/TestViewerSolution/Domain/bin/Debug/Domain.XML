@@ -1,0 +1,873 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Domain.ICandidateTest">
+            <summary>
+            An Interface that contains Candidate Exam information.
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.Candidate">
+            <summary>
+            Candidate Information
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.CandidateId">
+            <summary>
+            Candidate ID
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.DateTime">
+            <summary>
+            Date and Time when the test has been created
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.Id">
+            <summary>
+            Candidate Test ID
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.StateId">
+            <summary>
+            Exam's State
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.TestInstance">
+            <summary>
+            The Test Instance information
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.TestInstanceId">
+            <summary>
+            Test Instance ID
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.Questions">
+            <summary>
+            Exam Questions
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.TimeLimit">
+            <summary>
+            Exam time limit
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.correctAnswers">
+            <summary>
+            Number of correct answers
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidateTest.inCorrectAnswers">
+            <summary>
+            Number of incorrect answers
+            </summary>
+        </member>
+        <member name="T:Domain.IActualTest">
+            <summary>
+            An Interface that represents an Actual Candidate Test
+            </summary>
+        </member>
+        <member name="T:Domain.IPerson">
+            <summary>
+            An Interface that contains Person (Candidate and Administrator) information
+            </summary>
+        </member>
+        <member name="P:Domain.IPerson.Id">
+            <summary>
+            Person ID
+            </summary>
+        </member>
+        <member name="P:Domain.IPerson.TestViewer">
+            <summary>
+            Test Viewer details
+            </summary>
+        </member>
+        <member name="P:Domain.IPerson.TestViewerId">
+            <summary>
+            Test Viewer ID
+            </summary>
+        </member>
+        <member name="P:Domain.IPerson.Active">
+            <summary>
+            Person Status
+            </summary>
+        </member>
+        <member name="T:Domain.IAdministrator">
+            <summary>
+            An Interface that contains Administrator information
+            </summary>
+        </member>
+        <member name="P:Domain.IAdministrator.GivenName">
+            <summary>
+            First or Given Name
+            </summary>
+        </member>
+        <member name="P:Domain.IAdministrator.LastName">
+            <summary>
+            Last name
+            </summary>
+        </member>
+        <member name="P:Domain.IAdministrator.TestInstances">
+            <summary>
+            Collection of Test Instances associated with the Administrator
+            </summary>
+        </member>
+        <member name="T:Domain.IAnswer">
+            <summary>
+            An Interface that contains Answer information
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.CandidateTest">
+            <summary>
+            Candidate Test or the exam it is associated with
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.CandidateTestId">
+            <summary>
+            Candidate Test ID
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.Choice">
+            <summary>
+            Choice details
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.ChoiceId">
+            <summary>
+            Choice ID
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.DateTime">
+            <summary>
+            Date and time when it has been answered
+            </summary>
+        </member>
+        <member name="P:Domain.IAnswer.Id">
+            <summary>
+            Answer ID
+            </summary>
+        </member>
+        <member name="T:Domain.ICandidate">
+            <summary>
+            An Interface that contains Candidate information
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.CandidateTests">
+            <summary>
+            Collection of Candidate Tests it is associated with
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.StudentNumber">
+            <summary>
+            Student Number
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.HadTakenExam">
+            <summary>
+            Had taken Exam (All Exams associated with the candidate)
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.HasPendingExams">
+            <summary>
+            Exams that has not been taken yet
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.HasInProgressExams">
+            <summary>
+            Exams that is being taken by the candidate
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.PendingExams">
+            <summary>
+            Collection of Pending Exams (Exams that has not been taken yet)
+            </summary>
+        </member>
+        <member name="P:Domain.ICandidate.InProgressExams">
+            <summary>
+            Collection of In-Progress Exams (Exams that is being taken by the candidate)
+            </summary>
+        </member>
+        <member name="T:Domain.IChoice">
+            <summary>
+            An interface that contains a single choice details
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.Answers">
+            <summary>
+            Collection of answers associated with the choice
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.Id">
+            <summary>
+            Choice ID
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.IsCorrect">
+            <summary>
+            Returns if the choice is the correct answer or not
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.Question">
+            <summary>
+            Question where it is associated with
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.QuestionId">
+            <summary>
+            Question ID
+            </summary>
+        </member>
+        <member name="P:Domain.IChoice.Text">
+            <summary>
+            Choice text
+            </summary>
+        </member>
+        <member name="T:Domain.RecordNotFoundException">
+            <summary>
+            An Exception class that throws when a particular record is not found
+            </summary>
+        </member>
+        <member name="M:Domain.RecordNotFoundException.#ctor(System.String)">
+            <summary>
+            Accepts the message the object will throw.
+            </summary>
+            <param name="message">The exception message</param>
+        </member>
+        <member name="T:Domain.Facade">
+            <summary>
+            This class is the main interface of the TestViewer
+            </summary>
+        </member>
+        <member name="M:Domain.Facade.FetchAdministrator(System.Guid)">
+            <summary>
+            Returns an administrator by Id.
+            </summary>
+            <param name="id">Administrator ID</param>
+            <returns>Administrator</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Administrator is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.CandidatesThatContains(System.String,System.Boolean)">
+            <summary>
+            Returns a collection of all the candidates that starts with the specified number.
+            </summary>
+            <param name="studentNumberPart">Student number part that is contained in the whole student number</param>
+            <param name="active">Candidate Status (True or False)</param>
+            <returns>IEnumerable&lt;ICandidate&gt;</returns>
+        </member>
+        <member name="M:Domain.Facade.FetchCandidates(System.Boolean)">
+            <summary>
+            Fetches a collection of active or inactive candidates
+            </summary>
+            <param name="onlyActive">Candidate Status</param>
+            <returns>IEnumerable&lt;ICandidate&gt;</returns>
+        </member>
+        <member name="M:Domain.Facade.FetchCandidate(System.String)">
+            <summary>
+            Retrieves the student with a matching Student number
+            </summary>
+            <param name="studentNumber">Student Number</param>
+            <returns>ICandidate</returns>
+            <exception cref="T:Domain.RecordNotFoundException">If no record found.</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchCandidate(System.Guid)">
+            <summary>
+            Retrieves the student using the Candidate ID
+            </summary>
+            <param name="id">Candidate ID</param>
+            <returns>ICandidate</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Candidate is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.CreateCandidate(System.String)">
+            <summary>
+            Creates candidate information. Returns the candidate record if student number already exists.
+            </summary>
+            <param name="studentNumber">Student Number</param>
+            <returns>ICandidate</returns>
+            <exception cref="T:Domain.BusinessRuleException">When student number is not valid</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateCandidate(System.Guid,System.String,System.Boolean)">
+            <summary>
+            Updates the candidate student number and status
+            </summary>
+            <param name="id">Candidate ID</param>
+            <param name="newStudentNumber">Candidate New Student Number</param>
+            <param name="active">Candidate Status</param>
+            <returns>ICandidate</returns>
+            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be updated due to some reason</exception>
+            <exception cref="T:Domain.RecordNotFoundException">When the Candidate that is going to be updated is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When New Student Number is already being used by some Candidates</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateCandidate(System.Guid,System.String)">
+            <summary>
+            Updates the candidate student number. Returns a BusinessRuleException if newStudentNumber exists.
+            </summary>
+            <param name="id"></param>
+            <param name="newStudentNumber"></param>
+            <returns>ICandidate</returns>
+            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be updated because it is already in the Candidate Test or New Student number is already being used by other candidate</exception>
+            <exception cref="T:Domain.RecordNotFoundException">When the Candidate that is going to be updated is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.ChangeCandidateStatus(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Change Candidate's status into its opposite status
+            </summary>
+            <param name="candidateIds">Collection of Candidate ID</param>
+            <returns>IQUestion</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Candidate ID is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be updated due to some reason</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteCandidate(System.Guid)">
+            <summary>
+            Deletes the Candidate associated with the Candidate ID
+            </summary>
+            <param name="candidateId">Candidate ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Candidate is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be deleted due to some reason</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchQuestion(System.Guid)">
+            <summary>
+            Returns the question associated with the questionId
+            </summary>
+            <param name="questionId">Question ID</param>
+            <returns>IQuestion</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Question is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchQuestionThatContains(System.String)">
+            <summary>
+            Returns a list of Questions that contains the provided text in the question text.
+            </summary>
+            <param name="questionTextPart">Word or Part contained in the Question text</param>
+            <returns>IEnumerable&lt;IQuestion&gt;</returns>
+        </member>
+        <member name="M:Domain.Facade.FetchQuestionsNotInTheTestTemplate(System.Guid)">
+            <summary>
+            Fetches a collection of questions that are not associated with the Test Template
+            </summary>
+            <param name="templateId"></param>
+            <returns>IEnumerable&lt;IQuestion&gt;</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test template is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.CreateQuestion(System.String,System.Boolean)">
+            <summary>
+            Adds a new question to the Question Bank. Returns the question if Question text already exists in the Question Bank
+            </summary>
+            <param name="text">Question Text</param>
+            <param name="isActive">Question status</param>
+            <returns>IQuestion</returns>
+            <exception cref="T:Domain.BusinessRuleException">When Question is empty or white space.</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateQuestion(System.Guid,System.String,System.Boolean)">
+            <summary>
+            Updates the question to the Question Bank
+            </summary>
+            <param name="questionId">Question Id</param>
+            <param name="text">Question Text</param>
+            <param name="isActive">Question Status</param>
+            <returns>IQuestion</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Question is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Question has been used in the Test Template or Test Instance</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateQuestionStatus(System.Guid,System.Boolean)">
+            <summary>
+            Updates Question status to its opposite status.
+            </summary>
+            <param name="questionId">Question ID</param>
+            <param name="isActive">Question Status</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Question is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When setting the question to inactive while it is being used in the Test Template</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteQuestion(System.Guid)">
+            <summary>
+            Deletes the question from the Question Bank and all its choices.
+            </summary>
+            <param name="questionId">Question ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When question is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Question is unable to be deleted because it is being used in the test template or the test instance</exception>
+        </member>
+        <member name="M:Domain.Facade.CreateQuestionChoice(System.Guid,System.String,System.Boolean)">
+            <summary>
+            Adds a new question choice
+            </summary>
+            <param name="questionId">Question ID</param>
+            <param name="text">Choice Text</param>
+            <param name="isCorrect">Is the choice the correct answer</param>
+            <returns>IChoice</returns>
+            <exception cref="T:Domain.BusinessRuleException">When Choice text is empty or white space</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateQuestionChoice(System.Guid,System.Guid,System.String,System.Boolean)">
+            <summary>
+            Updates a question choice
+            </summary>
+            <param name="questionId">Question ID</param>
+            <param name="choiceId">Choice ID</param>
+            <param name="text">Choice Text</param>
+            <param name="isCorrect">Is choice the correct answer</param>
+            <returns>IChoice</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When either question or choice is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Question is being used in either the Test Template or Test Instance</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteQuestionChoice(System.Guid,System.Guid)">
+            <summary>
+            Removes a question choice
+            </summary>
+            <param name="questionId">Question ID</param>
+            <param name="choiceId">Choice ID</param>
+            <returns>bool</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When either Question or Choice is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Question is being used in either the Test Template or Test Instance</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteAllChoices(System.Guid)">
+            <summary>
+            Deletes all choices associated with the particular question
+            </summary>
+            <param name="questionId">Question ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When either Question or Choice is not found.</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchTestTemplate(System.Guid)">
+            <summary>
+            Fetch's a specific test template according to its Guid Template ID
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <returns>ITestTemplate</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchTestTemplateThatContains(System.String)">
+            <summary>
+            Fetches all Test Templates that contains a specified text in the test template name
+            </summary>
+            <param name="name">Part of the Test Template name</param>
+            <returns>IEnumerable&lt;ITestTemplate&gt;</returns>
+        </member>
+        <member name="M:Domain.Facade.CreateTestTemplate(System.String)">
+            <summary>
+            Creates a Test Template
+            </summary>
+            <param name="name">Test Template Name</param>
+            <returns>ITestTemplate</returns>
+            <exception cref="T:Domain.BusinessRuleException">When Test Template name is empty or white space or exists</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateTestTemplate(System.Guid,System.String)">
+            <summary>
+            Updates Test Template name
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <param name="newName">New Test Template Name</param>
+            <returns>ITestTemplate</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test template is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Test Template is being used in a Test Instance</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteTestTemplate(System.Guid)">
+            <summary>
+            Deletes Test Template, throws exception if its assocciated with a test instance or has questions.
+            </summary>
+            <param name="templateId">Test Template ID</param>
+        </member>
+        <member name="M:Domain.Facade.AddOrRemoveTemplateQuestion(System.Guid,System.Guid,Domain.AddOrRemoveStatus)">
+            <summary>
+            adds or removes question into the test template
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <param name="questionId">Question ID</param>
+            <param name="action">Add or Remove</param>
+        </member>
+        <member name="M:Domain.Facade.FetchTestInstances(System.Guid)">
+            <summary>
+            Fetches all test instances asssociated with the administrator ID provided.
+            </summary>
+            <param name="administratorId">Administrator ID</param>
+            <returns>IEnumerable&lt;ITestInstance&gt;</returns>
+        </member>
+        <member name="M:Domain.Facade.FetchTestInstance(System.Guid,System.Guid)">
+            <summary>
+            Fecthes a particular Test Instance associated with the administrator ID
+            </summary>
+            <param name="administratorId">Administrator ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <returns>ITestInstance</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Administrator or Test Instance is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.CreateTestInstance(System.Collections.Generic.List{System.Guid},System.Guid,System.Guid,System.Boolean,System.Int32)">
+            <summary>
+            Creates a new Test Instance
+            </summary>
+            <param name="candidateIds">List of Candidate IDs that will be added into the Test Instance</param>
+            <param name="administratorId">Administrator ID</param>
+            <param name="templateId">Test Instance ID</param>
+            <param name="isPractice">Exam mode (Practice or Actual Test)</param>
+            <param name="timeLimit">Time Limit</param>
+            <returns>ITestInstance</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template or one of the Candidates is not found.</exception>
+            <exception cref="T:Domain.BusinessRuleException">When the Candidate status is not active</exception>
+        </member>
+        <member name="M:Domain.Facade.UpdateTestInstance(System.Guid,System.Guid,System.Guid,System.Boolean,System.Int32)">
+            <summary>
+            Updates the Test Instance information
+            </summary>
+            <param name="administratorId">Administrator ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="templateId">Test Template ID</param>
+            <param name="isPractice">Exam mode (Practice or Actual Test)</param>
+            <param name="timeLimit">Time Limit</param>
+            <returns>ITestInstance</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template or Administrator or Test Instance is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When unable to update once Test Instance is Open.</exception>
+        </member>
+        <member name="M:Domain.Facade.DeleteTestInstance(System.Guid,System.Guid)">
+            <summary>
+            Deletes the Test Instance
+            </summary>
+            <param name="administratorId">Administrator ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Administrator or Test Instance is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When unable to delete once Test Instance is Open</exception>
+        </member>
+        <member name="M:Domain.Facade.OpenTestInstance(System.Guid,System.Guid)">
+            <summary>
+            Opens the Test Instance and make it accessible to the candidates
+            </summary>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="administratorId">Administrator ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Administrator or Test Instance is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Test Instance cannot be opened due to Business Rule Violation</exception>
+        </member>
+        <member name="M:Domain.Facade.CloseTestInstance(System.Guid,System.Guid)">
+            <summary>
+            Closes the Test Instance and make it inaccessible to the candidates
+            </summary>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="administratorId">Administrator ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Administrator or Test Instance is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Test Instance cannot be closed due to Business Rule Violation</exception>
+        </member>
+        <member name="M:Domain.Facade.FetchCandidateTest(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Fetches a particular candidate test.
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="candidateId">Candidate ID</param>
+            <returns>ICandidateTest</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template or Test Instance or Candidate Test is not found</exception>
+        </member>
+        <member name="M:Domain.Facade.AddCandidateToTestInstance(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Add a candidate to the Test Instance
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="candidateId">Candidate ID</param>
+            <returns>ICandidateTest</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template or Test Instance or Candidate is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When the Candidate already exists in the Test Instance or status is not active</exception>
+        </member>
+        <member name="M:Domain.Facade.RemoveCandidateFromTestInstance(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Removes a particular candidate from the test instance
+            </summary>
+            <param name="templateId">Test Template ID</param>
+            <param name="instanceId">Test Instance ID</param>
+            <param name="candidateId">Candidate ID</param>
+            <exception cref="T:Domain.RecordNotFoundException">When Test Template or Test Instance or Candidate Test is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When cannot remove Candidate Test because the Test Instance is already open</exception>
+        </member>
+        <member name="M:Domain.Facade.GetExam(System.String,System.Int32)">
+            <summary>
+            Returns the exam associated with the provided Student number and token ID
+            </summary>
+            <param name="studentNo"></param>
+            <param name="tokenId"></param>
+            <returns>ICandidateTest</returns>
+        </member>
+        <member name="M:Domain.Facade.BeginExam(System.Guid,System.Guid)">
+            <summary>
+            Sets the exam status to "in progress"
+            </summary>
+            <param name="candidateId"></param>
+            <param name="candidateTestId"></param>
+        </member>
+        <member name="M:Domain.Facade.SaveAnswer(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Saves the exam answer
+            </summary>
+            <param name="candidateId"></param>
+            <param name="candidateTestId"></param>
+            <param name="choiceId"></param>
+        </member>
+        <member name="M:Domain.Facade.FinishExam(System.Guid,System.Guid)">
+            <summary>
+            Closes the exam
+            </summary>
+            <param name="candidateId"></param>
+            <param name="candidateTestId"></param>
+        </member>
+        <member name="M:Domain.Facade.Dispose">
+            <summary>
+            Disposes the facade and all its resources
+            </summary>
+        </member>
+        <member name="P:Domain.Facade.Candidates">
+            <summary>
+            Returns a list of candidates
+            </summary>
+        </member>
+        <member name="P:Domain.Facade.Questions">
+            <summary>
+            Returns a list of questions
+            </summary>
+        </member>
+        <member name="P:Domain.Facade.TestTemplates">
+            <summary>
+            Returns all test templates.
+            </summary>
+        </member>
+        <member name="T:Domain.Facade.MailingSystem">
+            <summary>
+            A class responsible for sending an email.
+            Source code from MailingSystem 1.5.10 which was supposed to be version 1.6
+            </summary>
+        </member>
+        <member name="M:Domain.Facade.MailingSystem.#ctor(System.Net.Mail.MailAddress,System.String,System.Net.Mail.MailAddress,System.String,System.String)">
+            <summary>
+            Sends mail 
+            </summary>
+            <param name="fromAddress">The addres that the mail is going to be send by</param>
+            <param name="fromPassword">The password for the address</param>
+            <param name="toAddress">the addres its going to be send too</param>
+            <param name="subject">subject</param>
+            <param name="body">the body of the email</param>
+        </member>
+        <member name="T:Domain.BusinessRuleException">
+            <summary>
+            An Exception class for Business Rule
+            </summary>
+        </member>
+        <member name="M:Domain.BusinessRuleException.#ctor(System.String)">
+            <summary>
+            Accepts the message the object will throw.
+            </summary>
+            <param name="message">The exception message</param>
+        </member>
+        <member name="T:Domain.IQuestion">
+            <summary>
+            An interface that contains question details
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.Active">
+            <summary>
+            Candidate Status (True or False)
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.Choices">
+            <summary>
+            Collection of choices contained in the question
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.Id">
+            <summary>
+            Question ID
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.QuestionBank">
+            <summary>
+            QuestionBank where it belongs to
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.QuestionBankId">
+            <summary>
+            Question Bank ID
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.TestTemplates">
+            <summary>
+            Collection of Test Templates associated with the question
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.Text">
+            <summary>
+            Question text
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.Isvalid">
+            <summary>
+            Question is valid or not
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.IsBeingUsedInTestInstance">
+            <summary>
+            Question is being used in Test Instance
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestion.IsBeingUsedInTestTemplate">
+            <summary>
+            Question is being used in Test Template
+            </summary>
+        </member>
+        <member name="T:Domain.IQuestionBank">
+            <summary>
+            An Interface that contains Question Bank information
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestionBank.Questions">
+            <summary>
+            Collection of questions associated with the Question Bank
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestionBank.TestViewer">
+            <summary>
+            Test Viewer where it is associated with
+            </summary>
+        </member>
+        <member name="P:Domain.IQuestionBank.TestViewerId">
+            <summary>
+            Test Viewer ID
+            </summary>
+        </member>
+        <member name="T:Domain.ITestInstance">
+            <summary>
+            An Interface that contains Test settings
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.AdministeredBy">
+            <summary>
+            Administrator ID
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.Administrator">
+            <summary>
+            Administrator details
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.CandidateTests">
+            <summary>
+            Exams that has been created from the Test Instance
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.Id">
+            <summary>
+            Test Instance ID
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.IsPractice">
+            <summary>
+            Exam mode (Practice or Actual)
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.TemplateId">
+            <summary>
+            Test Template ID
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.TestTemplate">
+            <summary>
+            Test Template information
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.TokenId">
+            <summary>
+            Token ID which is also the access code.
+            </summary>
+        </member>
+        <member name="T:Domain.ITestTemplate">
+            <summary>
+            An Interface that contains Test Template details
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.Id">
+            <summary>
+            Test Template ID
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.Name">
+            <summary>
+            Test Template Name
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.Questions">
+            <summary>
+            Collection of questions in the test template
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.TestInstances">
+            <summary>
+            Collection of Test Instances that uses the test template
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.TestViewer">
+            <summary>
+            TestViewer where it is associated with
+            </summary>
+        </member>
+        <member name="P:Domain.ITestTemplate.TestViewerId">
+            <summary>
+            TestViewer ID
+            </summary>
+        </member>
+        <member name="T:Domain.ITestViewer">
+            <summary>
+            Aggregate root of the system.
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.Candidates">
+            <summary>
+            Collection of candidates
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.DevelopedBy">
+            <summary>
+            Developer of the system
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.Id">
+            <summary>
+            TestViewer ID
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.People">
+            <summary>
+            Collection of Candidates and Administrators
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.QuestionBank">
+            <summary>
+            Manages all questions
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.Questions">
+            <summary>
+            Collection of questions
+            </summary>
+        </member>
+        <member name="P:Domain.ITestViewer.TestTemplates">
+            <summary>
+            Collection of Test Templates
+            </summary>
+        </member>
+        <member name="T:Domain.IPracticeTest">
+            <summary>
+            An Interface that contains Candidate Test details
+            </summary>
+        </member>
+        <member name="P:Domain.IPracticeTest.Answers">
+            <summary>
+            Collection of answers that is associated with the candidate test
+            </summary>
+        </member>
+        <member name="T:Domain.AddOrRemoveStatus">
+            <summary>
+            An Enum for Add or Remove
+            </summary>
+        </member>
+        <member name="F:Domain.AddOrRemoveStatus.Add">
+            <summary>
+            Add Status
+            </summary>
+        </member>
+        <member name="F:Domain.AddOrRemoveStatus.Remove">
+            <summary>
+            Remove Status
+            </summary>
+        </member>
+    </members>
+</doc>

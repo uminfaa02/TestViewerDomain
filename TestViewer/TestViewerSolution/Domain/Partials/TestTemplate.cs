@@ -16,6 +16,18 @@ namespace Domain
 
             Name = name;
         }
+        
+
+        #region Questions
+        
+        public Question FetchQuestion(Guid questionId)
+        {
+            return Questions.FirstOrDefault(q => q.Id.Equals(questionId));
+        }
+
+        #endregion
+
+        #region TestInstances
 
         public TestInstance FetchTestInstance(Guid id)
         {
@@ -26,43 +38,60 @@ namespace Domain
             throw new RecordNotFoundException("Test Instance with ID '" + id + "' does not exist");
         }
 
-        public Question FetchQuestion(Guid questionId)
+        public TestInstance CreateTestInstance(List<Candidate> candidates, Administrator administrator, bool isPractice, int timeLimit)
         {
-            return Questions.FirstOrDefault(q => q.Id.Equals(questionId));
-        }
-
-        public TestInstance CreateTestInstance(List<Candidate> candidates, Guid administratorId, bool isPractice, int timeLimit)
-        {
-            var testInstance = new TestInstance(administratorId, isPractice, timeLimit);
+            var testInstance = new TestInstance(administrator, isPractice, timeLimit);
 
             foreach (var candidate in candidates)
             {
-                testInstance.CreateCandidateTest((Candidate)candidate);
+                testInstance.CreateCandidateTest(candidate);
             }
 
             TestInstances.Add(testInstance);
             return testInstance;
         }
 
-        public TestInstance UpdateTestInstance(Guid instanceId, TestTemplate newTestTemplate, bool isPractice, int timeLimit)
+        public bool IsBeingUsedInTestInstance
         {
-            var result = FetchTestInstance(instanceId);
-
-            result.TestTemplate = newTestTemplate;
-            result.IsPractice = isPractice;
-            result.TimeLimit = timeLimit;
-            return result;
+            get { return TestInstances.Count > 0; }
         }
 
-        public void CanTestInstanceBeModified(Guid instanceId)
+        public bool IsUsedInAScheduledTestInstance
         {
-            throw new NotImplementedException("We need to add a new field in the database called IsOpen " +
-            "If the TestInstance is OPEN and All candidate test states are SCHEDULED, It can be modified" +
-            "else, Cannot be.");
-            //TODO: We need to add a new field in the database called IsOpen
-            // If the TestInstance is OPEN and All candidate test states are SCHEDULED, It can be modified
-            // else, Cannot be.
+            get
+            {
+                return TestInstances.FirstOrDefault(ti => ti.IsScheduled) != null ? true : false;
+            }
         }
+
+        public bool IsUsedInAClosedTestInstance
+        {
+            get 
+            {
+                return TestInstances.FirstOrDefault(ti => ti.IsClosed) != null ? true : false;
+            }
+        }
+
+        #endregion
+
+        #region Candidate Test
+
+        public CandidateTest FetchCandidateTest(Guid instanceId, Guid candidateId)
+        {
+            return FetchTestInstance(instanceId).FetchCandidateTest(candidateId);
+        }
+
+        public CandidateTest CreateCandidateTest(Guid instanceId, Candidate candidate)
+        {
+            return FetchTestInstance(instanceId).CreateCandidateTest(candidate);
+        }
+
+        public void DeleteCandidateTest(Action action, Guid instanceId, CandidateTest candidateTest)
+        {
+            FetchTestInstance(instanceId).DeleteCandidateTest(action, candidateTest);
+        }
+
+        #endregion
 
 
         #region ITestTemplate Members
@@ -84,6 +113,5 @@ namespace Domain
 
         #endregion
 
-        
     }
 }

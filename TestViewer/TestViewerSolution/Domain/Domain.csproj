@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Domain.XML</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,7 +71,7 @@
     <Compile Include="Choice.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\RecordAlreadyExistsException.cs" />
+    <Compile Include="Enums\ExamState.cs" />
     <Compile Include="Exceptions\RecordNotFoundException.cs" />
     <Compile Include="Facade.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Partials\CandidateTestActive.cs" />
     <Compile Include="Partials\CandidateTestClosed.cs" />
     <Compile Include="Partials\CandidateTestScheduled.cs" />
+    <Compile Include="Partials\CandidateTestStart.cs" />
     <Compile Include="Partials\CandidateTestState.cs" />
     <Compile Include="Interfaces\IQuestion.cs" />
     <Compile Include="Partials\Choice.cs" />
@@ -106,16 +109,11 @@
     <Compile Include="Interfaces\IAnswer.cs" />
     <Compile Include="Interfaces\ICandidate.cs" />
     <Compile Include="Interfaces\ICandidateTest.cs" />
-    <Compile Include="Interfaces\ICandidateTestActive.cs" />
-    <Compile Include="Interfaces\ICandidateTestClosed.cs" />
-    <Compile Include="Interfaces\ICandidateTestScheduled.cs" />
-    <Compile Include="Interfaces\ICandidateTestState.cs" />
     <Compile Include="Interfaces\ITestInstance.cs" />
     <Compile Include="Interfaces\ITestTemplate.cs" />
     <Compile Include="Interfaces\ITestViewer.cs" />
     <Compile Include="Interfaces\IPracticeTest.cs" />
     <Compile Include="Interfaces\IActualTest.cs" />
-    <Compile Include="Exceptions\WarningBeforeProceedException.cs" />
     <Compile Include="Partials\Person.cs" />
     <Compile Include="Partials\PracticeTest.cs" />
     <Compile Include="Partials\Question.cs" />
@@ -129,9 +127,8 @@
     <Compile Include="PracticeTest.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AddOrRemoveStatus.cs" />
+    <Compile Include="Enums\AddOrRemoveStatus.cs" />
     <Compile Include="Question.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -145,6 +142,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="TestViewer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>

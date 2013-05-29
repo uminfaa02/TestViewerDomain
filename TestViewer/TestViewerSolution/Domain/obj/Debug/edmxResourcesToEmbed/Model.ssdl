@@ -13,8 +13,13 @@
     <EntitySet Name="TestInstance" EntityType="Domain.Store.TestInstance" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TestTemplate" EntityType="Domain.Store.TestTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TestViewer" EntityType="Domain.Store.TestViewer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="Domain.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Administrator_Person" Association="Domain.Store.FK_Administrator_Person">
       <End Role="Person" EntitySet="Person" />
+      <End Role="Administrator" EntitySet="Administrator" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Administrator_Users" Association="Domain.Store.FK_Administrator_Users">
+      <End Role="Users" EntitySet="Users" />
       <End Role="Administrator" EntitySet="Administrator" />
     </AssociationSet>
     <AssociationSet Name="FK_Answer_CandidateTest" Association="Domain.Store.FK_Answer_CandidateTest">
@@ -175,12 +180,34 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="DevelopedBy" Type="varchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+    <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+  </EntityType>
   <Association Name="FK_Administrator_Person">
     <End Role="Person" Type="Domain.Store.Person" Multiplicity="1" />
     <End Role="Administrator" Type="Domain.Store.Administrator" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Person">
         <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Administrator">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Administrator_Users">
+    <End Role="Users" Type="Domain.Store.Users" Multiplicity="1" />
+    <End Role="Administrator" Type="Domain.Store.Administrator" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="Administrator">
         <PropertyRef Name="Id" />

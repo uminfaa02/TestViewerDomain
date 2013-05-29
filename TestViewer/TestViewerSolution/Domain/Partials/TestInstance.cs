@@ -9,10 +9,10 @@ namespace Domain
     internal partial class TestInstance : ITestInstance
     {
 
-        public TestInstance(Guid administratorId, bool isPractice, int timeLimit)
+        public TestInstance(Administrator administrator, bool isPractice, int timeLimit)
             : this()
         {
-            AdministeredBy = administratorId;
+            Administrator = administrator;
             IsPractice = isPractice;
             TimeLimit = timeLimit;            
         }
@@ -35,37 +35,56 @@ namespace Domain
         {
             CandidateTest candidateTest;
 
-            if (IsPractice)
-                candidateTest = new PracticeTest(candidate);
-            else
-                candidateTest = new ActualTest(candidate); 
+            try
+            {
+                FetchCandidateTest(candidate);
+                throw new BusinessRuleException("Candidate already exists in the Test Instance");
+            }
+            catch (RecordNotFoundException)
+            {
+                if (IsPractice)
+                    candidateTest = new PracticeTest(candidate);
+                else
+                    candidateTest = new ActualTest(candidate);
 
-            CandidateTests.Add(candidateTest);
-            return candidateTest;
+                CandidateTests.Add(candidateTest);
+                return candidateTest;
+            }
         }
 
-        public void CanCandidateTestBeDeleted(CandidateTest candidateTest)
+        public void Open()
         {
-            // If State is Active or Closed, Can only be modified when state is Scheduled
-            if (candidateTest.StateId != 1)
-                throw new BusinessRuleException("CandidateTest with Student Number '" + candidateTest.Candidate.StudentNumber + "' " +
-                    "cannot be removed from Test Instance because the candidate has already been taking or finished the exam.");
+            foreach (var candidateTest in CandidateTests)
+            {
+                candidateTest.Activate();
+            }
         }
 
+        public void Close()
+        {
+            foreach (var candidateTest in CandidateTests)
+            {
+                candidateTest.Close();
+            }
+        }
 
         public void DeleteCandidateTest(Action action, CandidateTest candidateTest)
         {
-            //TODO: (DONE) Check before deleting candidateTest
-            CanCandidateTestBeDeleted(candidateTest);
+            if (!IsScheduled)
+            {
+                throw new BusinessRuleException("Unable to delete Candidate Test once the Test Instance has been set to Open");
+            }
             action();
         }
 
-        public bool DeleteAllowed
+        public bool IsScheduled
         {
-            get
-            {
-                return CandidateTests.Count < 1; 
-            }
+            get { return CandidateTests.FirstOrDefault(ct => ct.StateId.Equals((int)ExamState.Scheduled)) != null ? true : false; }
+        }
+
+        public bool IsClosed
+        {
+            get { return CandidateTests.FirstOrDefault(ct => ct.StateId.Equals((int)ExamState.Closed)) != null ? true : false; }
         }
 
         #region ITestInstance Members

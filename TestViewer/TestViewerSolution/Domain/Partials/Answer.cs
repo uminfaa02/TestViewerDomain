@@ -8,6 +8,12 @@ namespace Domain
 {
     internal partial class Answer : IAnswer
     {
+        public Answer() { }
+        public Answer(Guid choiceId) 
+            : this()
+        {
+            ChoiceId = choiceId;
+        }
 
         #region IAnswer Memmbers
         ICandidateTest IAnswer.CandidateTest

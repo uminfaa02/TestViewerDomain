@@ -16,11 +16,47 @@ namespace Domain
             StateId = 1; //Set the state to be scheduled when a new object (instance) is first created
         }
 
-    
+        public int TokenId
+        {
+            get { return TestInstance.TokenId; }
+        }
+
+        public List<Question> Questions
+        {
+            get { return TestInstance.TestTemplate.Questions.ToList(); }
+        }
+
+        public int correctAnswers
+        {
+            get { return Answers.Where(a => a.Choice.IsCorrect).Count(); }
+        }
+
+        public int inCorrectAnswers
+        {
+            get { return Answers.Where(a => !a.Choice.IsCorrect).Count(); }
+        }
+
+        public int TimeLimit
+        {
+            get { return TestInstance.TimeLimit; }
+        }
+
+
+        public void SaveAnswer(Guid choiceId)
+        {
+            Answer answer = new Answer(choiceId);
+            Answers.Add(answer);
+        }
+
         public void Activate()
         {
             _state.Activate(this); 
-        }   
+        }
+
+        public void Start()
+        {
+            _state.Start(this);
+        }
 
         public void Close()
         {
@@ -34,16 +70,16 @@ namespace Domain
             {
                 case "StateId":
                     setState();
-                    break; 
-
+                    break;
             }
         }
 
 
-        public  void DoSomething()
-        {
-            _state.DoSomething(); 
-        }
+        //public  void DoSomething()
+        //{
+        //    _state.DoSomething(); 
+        //}
+
 
         #region State Machine
 
@@ -60,8 +96,11 @@ namespace Domain
                     _state = new CandidateTestActive();
                     break; 
                 case 3:
-                    _state = new CandidateTestClosed();
+                    _state = new CandidateTestStart();
                     break; 
+                case 4:
+                    _state = new CandidateTestClosed();
+                    break;
             }
         }
 
@@ -70,11 +109,6 @@ namespace Domain
 
 
         #region ICandidateTest Members
-
-        IEnumerable<IAnswer> ICandidateTest.Answers
-        {
-            get { return Answers.AsEnumerable<IAnswer>();  }
-        }
 
         ICandidate ICandidateTest.Candidate
         {
@@ -86,6 +120,13 @@ namespace Domain
             get { return TestInstance; }
         }
 
+        IEnumerable<IQuestion> ICandidateTest.Questions
+        {
+            get { return TestInstance.TestTemplate.Questions.AsEnumerable<IQuestion>(); }
+        }
+
         #endregion 
+    
+
     }
 }

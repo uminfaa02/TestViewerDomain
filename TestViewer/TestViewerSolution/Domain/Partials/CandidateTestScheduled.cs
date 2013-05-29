@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal class CandidateTestScheduled :CandidateTestState, ICandidateTestScheduled
+    internal class CandidateTestScheduled :CandidateTestState
     {
-
-        public override void DoSomething()
-        {
-            throw new BusinessRuleException("I'm still scheduled and not ready to do anything yet");
-        }
 
         public override void Activate(CandidateTest test)
         {
-            test.StateId = 2; 
+            test.StateId = (int)ExamState.Active; 
         }
 
         public override void Close(CandidateTest test)
         {
             throw new BusinessRuleException("The test must be activated prior to closing");
+        }
+
+        public override void Start(CandidateTest test)
+        {
+            throw new BusinessRuleException("The test must be activated prior to starting");
         }
     }
 }

@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal class CandidateTestActive : CandidateTestState, ICandidateTestActive
+    internal class CandidateTestActive : CandidateTestState
     {
-        public override void DoSomething()
-        {
-            Console.WriteLine("Something is being done"); 
-        }
 
         public override void Activate(CandidateTest test)
         {
@@ -20,7 +16,12 @@ namespace Domain
 
         public override void Close(CandidateTest test)
         {
-            test.StateId = 3; 
+            test.StateId = (int)ExamState.Closed; 
+        }
+
+        public override void Start(CandidateTest test)
+        {
+            test.StateId = (int)ExamState.InProgress;
         }
     }
 }

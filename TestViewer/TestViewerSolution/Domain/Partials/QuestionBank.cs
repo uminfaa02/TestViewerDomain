@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal partial class QuestionBank : IQuestionBank
+    internal partial class QuestionBank : IQuestionBank, IDisposable
     {
+
+        #region Question
 
         public Question FetchQuestion(Guid questionId)
         {
@@ -18,6 +20,20 @@ namespace Domain
             throw new RecordNotFoundException("Question with ID '" + questionId + "' does not exist");
         }
 
+        public Question FetchQuestion(string questionText)
+        {
+            var result = Questions.FirstOrDefault(q => q.Text.Equals(questionText));
+            if (result != null)
+                return result;
+
+            throw new RecordNotFoundException("Question with text '" + questionText + "' does not exist");
+        }
+
+        public List<Question> FetchQuestionThatContains(string questionTextPart)
+        {
+            return Questions.Where(q => q.Text.ToLower().Contains(questionTextPart.ToLower())).ToList();
+        }
+
         public Question CreateQuestion(string text, bool isActive)
         {
             var question = new Question(text, isActive);
@@ -25,75 +41,102 @@ namespace Domain
             return question;
         }
 
-        public void CanQuestionBeModified(Question question)
-        {
-            // A list of templates that contain this question
-            var templates = question.TestTemplates.ToList();
-
-            if (templates.Count > 0)
-            {
-                // Test templates that has been used in the test instance
-                var result = templates.Where(t => t.TestInstances.Count > 0).ToList();
-                if (result.Count > 0)
-                {
-                    throw new BusinessRuleException("Question has been used in the Test Instance. Cannot be modified.");
-                }
-                else
-                {
-                    // question only exists in the test template
-                    // if false (massege box - question is in the test tamplate only , do you still want to continue)
-                    throw new WarningBeforeProceedException("Question has been used in test Template");
-                }
-            }
-        }
-
-        public Question UpdateQuestion(Guid questionId, string text, bool isActive, bool ignoreValidation)
+        public Question UpdateQuestionStatus(Guid questionId, bool isActive)
         {
             var question = FetchQuestion(questionId);
-            if (!ignoreValidation)
-            {
-                CanQuestionBeModified(question);
-            }
-            question.Text = text;
-            question.Active = isActive;
 
+            if (question.Active == true)
+            {
+                if (question.IsBeingUsedInTestTemplate)
+                {
+                    throw new BusinessRuleException("Unable to set question to inactive while it is being used in the Test Template");
+                }
+            }
+            question.Active = isActive;
             return question;
         }
 
-        public void DeleteQuestion(Action action, Question question)
+        public Question UpdateQuestion(Guid questionId, string text)
         {
-            //TODO:(DONE) Put Check for Test Instance before deleting question 
-            CanQuestionBeModified(question);
-            action();    
+            var question = FetchQuestion(questionId);
+            ThrowBusinessRuleViolation(question);
+
+            question.Text = text;
+            return question;
         }
 
-        public void DeleteQuestionChoice(Action action, Choice choice)
+        public void DeleteQuestion(Question question, Action action)
         {
-            CanQuestionBeModified(choice.Question);
-            choice.Question.DeleteChoice(action, choice);
+            ThrowBusinessRuleViolation(question);
+            action();
         }
+
+        private void ThrowBusinessRuleViolation(Question question)
+        {
+            if (question.IsBeingUsedInTestInstance)
+                throw new BusinessRuleException("Unable to update question because is it being used in the Test Instance");
+            else if (question.IsBeingUsedInTestTemplate)
+                throw new BusinessRuleException("Unable to update question because is it being used in the Test Template");
+        }
+
+        #endregion
+
+        #region Choice
+
+        public Choice CreateQuestionChoice(Guid questionId, string text, bool isCorrect)
+        {
+            var question = FetchQuestion(questionId);
+            ThrowBusinessRuleViolation(question);
+            
+            return question.CreateChoice(text, isCorrect);
+        }
+
+        public Choice UpdateQuestionChoice(Guid questionId, Guid choiceId, string text, bool isCorrect)
+        {
+            var question = FetchQuestion(questionId);
+            ThrowBusinessRuleViolation(question);
+
+            return question.UpdateChoice(choiceId, text, isCorrect);
+        }
+
+        public void DeleteQuestionChoice(Action action, Question question, Choice choice)
+        {
+            ThrowBusinessRuleViolation(question);
+            question.DeleteChoice(action, choice);
+        }
+
+        #endregion
+
+        #region Test Template
 
         public void AddTemplateQuestion(TestTemplate template, Guid questionId)
         {
             var question = FetchQuestion(questionId);
 
-            if (question.IsOnTestTemplate(template))
-                throw new RecordAlreadyExistsException("Question already exists in the test template");  
+            if (question.IsInTestTemplate(template))
+                throw new BusinessRuleException("Question already exists in the test template");
+            else if (!question.Isvalid)
+                throw new BusinessRuleException("Question does not contain either at least 2 choices or 1 choice with answer");
             else
-                question.AddToTemplate(template);    
+                question.AddToTemplate(template);
         }
 
         public void RemoveTemplateQuestion(TestTemplate template, Guid questionId)
         {
             var question = FetchQuestion(questionId);
 
-            if (question.IsOnTestTemplate(template))
+            if (question.IsInTestTemplate(template))
                 question.RemoveFromTemplate(template);
             else
-                throw new RecordNotFoundException("Question does not exists in the template");    
+                throw new RecordNotFoundException("Question does not exists in the template");
         }
 
+        public List<Question> FetchQuestionsNotInTheTestTemplate(TestTemplate template)
+        {
+            return Questions.Where(q => !q.TestTemplates.Contains(template)).ToList();
+        }
 
+        #endregion
 
         #region IQuestionBank Members
 
@@ -108,5 +151,10 @@ namespace Domain
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            Questions.Clear();
+        }
     }
 }

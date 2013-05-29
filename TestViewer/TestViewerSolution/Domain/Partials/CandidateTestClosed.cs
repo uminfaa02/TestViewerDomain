@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal class CandidateTestClosed : CandidateTestState, ICandidateTestClosed
+    internal class CandidateTestClosed : CandidateTestState
     {
-        public override void DoSomething()
-        {
-            throw new BusinessRuleException("I'm closed and aint doin nothing"); 
-        }
 
         public override void Activate(CandidateTest test)
         {
@@ -21,6 +17,11 @@ namespace Domain
         public override void Close(CandidateTest test)
         {
             //NO-OP
+        }
+
+        public override void Start(CandidateTest test)
+        {
+            throw new BusinessRuleException("The test has already been closed and can not be restarted"); 
         }
     }
 }

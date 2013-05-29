@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal partial class TestViewer : ITestViewer
+    internal partial class TestViewer : ITestViewer, IDisposable
     {
 
         #region Administrator Management
@@ -25,6 +25,12 @@ namespace Domain
             throw new RecordNotFoundException("Administrator with ID '" + id + "' does not exist");
         }
 
+        public void ThrowBusinessRuleViolationForAdministrator(Administrator administrator)
+        {
+            if (!administrator.Active)
+                throw new BusinessRuleException("Unable to access or modify information because the Administrator status is Inactive.");
+        }
+
         #endregion
 
         #region Candidate Management
@@ -38,9 +44,9 @@ namespace Domain
             }
         }
 
-        public List<Candidate> CandidatesStartsWith(string studentNumber)
+        public List<Candidate> CandidatesThatContains(string studentNumber, bool active)
         {
-            return Candidates.Where(s => s.StudentNumber.StartsWith(studentNumber)).ToList();
+            return Candidates.Where(s => s.StudentNumber.Contains(studentNumber) && s.Active.Equals(active)).ToList();
         }
 
         public List<Candidate> FetchCandidates(IEnumerable<Guid> candidateIds)
@@ -48,8 +54,7 @@ namespace Domain
             var candidates = new List<Candidate>();
             foreach (var candidateId in candidateIds)
             {
-                var result = FetchCandidate(candidateId);
-                candidates.Add(result);
+                candidates.Add(FetchCandidate(candidateId));
             }
             return candidates;
         }
@@ -79,31 +84,29 @@ namespace Domain
 
         public Candidate CreateCandidate(string studentNumber)
         {
-            Candidate candidate;
             try
             {
-                FetchCandidate(studentNumber);
-                throw new RecordAlreadyExistsException("Student number already exists.");
+               FetchCandidate(studentNumber);
+               throw new BusinessRuleException("Candidate already exists");
             }
             catch (RecordNotFoundException)
             {
-                candidate = new Candidate(studentNumber);
-                People.Add(candidate);
+                var result = new Candidate(studentNumber);
+                People.Add(result);
+                return result;
             }
-            return candidate;
         }
 
-        public void CanCandidateBeModified(Candidate candidate)
+        public void ThrowBusinessRuleViolationForCandidate(Candidate candidate)
         {
-            if (candidate.CandidateTests.Count <= 0)
-                throw new BusinessRuleException("Candidate has already been taken an exam. Cannot be modified.");
+            if (candidate.HadTakenExam)
+                throw new BusinessRuleException("Candidate is already in the Candidate Test. Cannot be modified.");
         }
 
-        // update candidates number
         public Candidate UpdateCandidate(Guid id, string newStudentNumber)
         {
             var candidate = FetchCandidate(id);
-            CanCandidateBeModified(candidate);
+            ThrowBusinessRuleViolationForCandidate(candidate);
             // Candidate exists
             try
             {
@@ -112,41 +115,43 @@ namespace Domain
                 var result = FetchCandidate(newStudentNumber);
                 if (!result.Id.Equals(candidate.Id))
                 {
-                    throw new RecordAlreadyExistsException("Cannot change current candidate student number with '" +
-                    newStudentNumber + "' because it is already being used by someone.");
+                    throw new BusinessRuleException("Cannot change current candidate student number with '" +
+                    newStudentNumber + "' because it is already being used by other candidate.");
                 }
             }
             catch (RecordNotFoundException)
             {
-                // Update with the new student number
                 candidate.StudentNumber = newStudentNumber;
             }
             return candidate;
         }
 
-        // update candidates student number and statues
-        public Candidate UpdateCandidate(Guid id, string newStudentNumber, bool active)
+        public Candidate UpdateCandidate(Guid id, string newStudentNumber, bool isActive)
         {
             var candidate = UpdateCandidate(id, newStudentNumber);
-            candidate.Active = active;
+            ChangeCandidateStatus(candidate, isActive);
 
             return candidate;
         }
 
-        // update Candidates status (true/false)
-        public Candidate UpdateCandidate(Guid id, bool active)
+        public void ChangeCandidateStatus(Guid id)
         {
             var candidate = FetchCandidate(id);
-            CanCandidateBeModified(candidate);
-            // Candidate exists
-            candidate.Active = active;
-            return candidate;
+            ChangeCandidateStatus(candidate, !candidate.Active);
+        }
+
+        private void ChangeCandidateStatus(Candidate candidate, bool isActive)
+        {
+            if (candidate.HasPendingExams || candidate.HasInProgressExams)
+            {
+                throw new BusinessRuleException("Unable to deactivate candidate while it has a pending or in progress exam.");
+            }
+            candidate.Active = isActive;
         }
 
         public void DeleteCandidate(Action action, Candidate candidate)
         {
-            //TODO: (DONE) Put Check for Test Instance before deleting Candidate 
-            CanCandidateBeModified(candidate);
+            ThrowBusinessRuleViolationForCandidate(candidate);
             action();
         }
 
@@ -160,9 +165,7 @@ namespace Domain
         public List<Question> Questions
         {
             get
-            {
-                return QuestionBank.Questions.ToList();
-            }
+            { return QuestionBank.Questions.ToList(); }
         }
 
         public Question FetchQuestion(Guid questionId)
@@ -170,41 +173,50 @@ namespace Domain
             return QuestionBank.FetchQuestion(questionId);
         }
 
+        public List<Question> FetchQuestionThatContains(string questionTextPart)
+        {
+            return QuestionBank.FetchQuestionThatContains(questionTextPart);
+        }
+
         public Question CreateQuestion(string text, bool isActive)
         {
-            return QuestionBank.CreateQuestion(text, isActive); 
+            return QuestionBank.CreateQuestion(text, isActive);
         }
 
-        public void CanQuestionBeModified(Question question)
+        public Question UpdateQuestion(Guid questionId, string text)
         {
-            QuestionBank.CanQuestionBeModified(question);
+            return QuestionBank.UpdateQuestion(questionId, text);
         }
 
-
-        public Question UpdateQuestion(Guid questionId, string text, bool isActive, bool ignoreValidation)
+        public Question UpdateQuestionStatus(Guid questionId, bool isActive)
         {
-            return QuestionBank.UpdateQuestion(questionId, text, isActive, ignoreValidation);
+            return QuestionBank.UpdateQuestionStatus(questionId, isActive);
         }
 
-        public void DeleteQuestion(Action action, Question question)
+        public void DeleteQuestion(Question question, Action action)
         {
-           QuestionBank.DeleteQuestion(action, question);
+            QuestionBank.DeleteQuestion(question, action);
         }
-
 
         public Choice CreateQuestionChoice(Guid questionId, string text, bool isCorrect)
         {
-            return FetchQuestion(questionId).CreateChoice(text, isCorrect);
+            return QuestionBank.CreateQuestionChoice(questionId, text, isCorrect);
         }
 
         public Choice UpdateQuestionChoice(Guid questionId, Guid choiceId, string text, bool isCorrect)
         {
-            return FetchQuestion(questionId).UpdateChoice(choiceId, text, isCorrect);
+            return QuestionBank.UpdateQuestionChoice(questionId, choiceId, text, isCorrect);
         }
 
-        public void DeleteQuestionChoice(Action action, Choice choice)
+        public void DeleteQuestionChoice(Action action, Question question, Choice choice)
         {
-            QuestionBank.DeleteQuestionChoice(action, choice);
+            QuestionBank.DeleteQuestionChoice(action, question, choice);
+        }
+
+        public List<Question> FetchQuestionsNotInTheTestTemplate(Guid templateId)
+        {
+            var template = FetchTestTemplate(templateId);
+            return QuestionBank.FetchQuestionsNotInTheTestTemplate(template);
         }
 
         #endregion
@@ -212,7 +224,7 @@ namespace Domain
         #region Test Template Management
 
 
-        public TestTemplate FetchTestTemplate(Guid templateId)
+        public TestTemplate  FetchTestTemplate(Guid templateId)
         {
             var result = TestTemplates.FirstOrDefault(t => t.Id.Equals(templateId));
             if (result != null)
@@ -220,6 +232,11 @@ namespace Domain
             throw new RecordNotFoundException("Test Template with ID '" + templateId + "' does not exist");
         }
 
+
+        public List<TestTemplate> FetchTestTemplateThatContains(string name)
+        {
+            return TestTemplates.Where(t => t.Name.ToLower().Contains(name.ToLower())).ToList();
+        }
 
         public TestTemplate FetchTestTemplate(string name)
         {
@@ -229,33 +246,28 @@ namespace Domain
             throw new RecordNotFoundException("Test Template with name '" + name + "', does not exist");
         }
 
-
         public TestTemplate CreateTestTemplate(string name)
         {
             try
             {
-                FetchTestTemplate(name);
-                throw new RecordAlreadyExistsException("Test Template with a name '" + name + "' already exists");
+                return FetchTestTemplate(name);
+                throw new BusinessRuleException("Test Template name already exists");
             }
             catch (RecordNotFoundException)
             {
-                TestTemplate template = new TestTemplate(name);
+                var template = new TestTemplate(name);
                 TestTemplates.Add(template);
                 return template;
             }
         }
 
-        public void CanTemplateBeModified(TestTemplate template)
-        {
-            //This method won't return FALSE result. only TRUE and BusinessRuleException
-            // checks if theres any test instance 
-            if (template.TestInstances.Count > 0)
-                throw new BusinessRuleException("Test Template has been used in the Test Instance. Cannot add or remove questions, and delete this template.");
-        }
-
         public TestTemplate UpdateTestTemplate(Guid templateId, string newName)
         {
             var template = FetchTestTemplate(templateId);
+
+            if (!template.IsUsedInAScheduledTestInstance)
+                throw new BusinessRuleException("Unable to update Test Template because it is being used in a Test Instance");
+
             try
             {
                 FetchTestTemplate(newName);
@@ -269,14 +281,18 @@ namespace Domain
 
         public void DeleteTestTemplate(Action action, TestTemplate template)
         {
-            CanTemplateBeModified(template);
+            if (template.IsBeingUsedInTestInstance)
+                throw new BusinessRuleException("Unable to update Test Template because it is being used in a Test Instance");
             action();
         }
 
         public void AddOrRemoveTemplateQuestion(Guid templateId, Guid questionId, AddOrRemoveStatus action)
         {
             var template = FetchTestTemplate(templateId);
-            CanTemplateBeModified(template);
+
+            if (!template.IsUsedInAScheduledTestInstance)
+                throw new BusinessRuleException("Unable to update Test Template because it is being used in a Test Instance");
+
             if (action == AddOrRemoveStatus.Add)
             {
                 QuestionBank.AddTemplateQuestion(template, questionId);
@@ -294,12 +310,18 @@ namespace Domain
 
         public List<TestInstance> FetchTestInstancesFromAdministrator(Guid administratorId)
         {
-            return FetchAdministrator(administratorId).TestInstances.ToList();
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            return administrator.TestInstances.ToList();
         }
 
         public TestInstance FetchTestInstanceFromAdministrator(Guid administratorId, Guid instanceId)
         {
-            return FetchAdministrator(administratorId).FetchTestInstance(instanceId);
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            return administrator.FetchTestInstance(instanceId);
         }
 
         public TestInstance FetchTestInstanceFromTestTemplate(Guid templateId, Guid instanceId)
@@ -309,13 +331,33 @@ namespace Domain
 
         public TestInstance CreateTestInstance(IEnumerable<Guid> candidateIds, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
         {
-            return FetchTestTemplate(templateId).CreateTestInstance(FetchCandidates(candidateIds), administratorId, isPractice, timeLimit);
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            var candidates = FetchCandidates(candidateIds);
+            foreach (var candidate in candidates)
+            {
+                if (!candidate.Active)
+                    throw new BusinessRuleException("Candidate cannot be added to the Test Instance because the status is not active");
+            }
+            return FetchTestTemplate(templateId).CreateTestInstance(candidates, administrator, isPractice, timeLimit);
         }
 
-        public TestInstance UpdateTestInstance(Guid currentTemplateId, Guid instanceId, Guid newTemplateId, bool isPractice, int timeLimit)
+        public TestInstance UpdateTestInstance(Guid administratorId, Guid instanceId, Guid templateId, bool isPractice, int timeLimit)
         {
-            var newTestTemplate = FetchTestTemplate(newTemplateId);
-            return FetchTestTemplate(currentTemplateId).UpdateTestInstance(instanceId, newTestTemplate, isPractice, timeLimit);
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            var testTemplate = FetchTestTemplate(templateId);
+            return administrator.UpdateTestInstance(instanceId, testTemplate, isPractice, timeLimit);     
+        }
+
+        public void DeleteTestInstance(Action action, Guid administratorId, TestInstance testInstance)
+        {
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            administrator.DeleteTestInstance(action, testInstance);
         }
 
         public TestInstance AddCandidateToTestInstance(Guid currentTemplateId, Guid instanceId, Guid candidateId)
@@ -328,8 +370,23 @@ namespace Domain
 
         public void DeleteCandidateTest(Action action, Guid templateId, Guid instanceId, CandidateTest candidateTest)
         {
-            var testInstance = FetchTestInstanceFromTestTemplate(templateId, instanceId);
-            testInstance.DeleteCandidateTest(action, candidateTest);
+            FetchTestTemplate(templateId).DeleteCandidateTest(action, instanceId, candidateTest);
+        }
+
+        public void OpenTestInstance(Guid instanceId, Guid administratorId)
+        {
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            administrator.OpenTestInstance(instanceId);
+        }
+
+        public void CloseTestInstance(Guid instanceId, Guid administratorId)
+        {
+            var administrator = FetchAdministrator(administratorId);
+            ThrowBusinessRuleViolationForAdministrator(administrator);
+
+            administrator.CloseTestInstance(instanceId);
         }
 
         #endregion
@@ -338,7 +395,49 @@ namespace Domain
 
         public CandidateTest FetchCandidateTest(Guid templateId, Guid instanceId, Guid candidateId)
         {
-            return FetchTestInstanceFromTestTemplate(templateId, instanceId).FetchCandidateTest(candidateId);
+            return FetchTestTemplate(templateId).FetchCandidateTest(instanceId, candidateId);
+        }
+
+        public CandidateTest CreateCandidateTest(Guid templateId, Guid instanceId, Guid candidateId)
+        {
+            var candidate = FetchCandidate(candidateId);
+            if (candidate.Active)
+            {
+                return FetchTestTemplate(templateId).CreateCandidateTest(instanceId, candidate);
+            }
+            throw new BusinessRuleException("Candidate cannot be added to the Test Instance because the status is not active");
+        }
+
+        #endregion
+
+        #region Exam Management
+
+        public CandidateTest GetExam(string studentNo, int tokenId)
+        {
+            try
+            {
+                var candidate = FetchCandidate(studentNo);
+                return candidate.GetExamByTokenId(tokenId);
+            }
+            catch (RecordNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        public void BeginExam(Guid candidateId, Guid candidateTestId)
+        {
+            FetchCandidate(candidateId).BeginExam(candidateTestId);
+        }
+
+        public void SaveAnswer(Guid candidateId, Guid candidateTestId, Guid choiceId)
+        {
+            FetchCandidate(candidateId).SaveAnswer(candidateTestId, choiceId);
+        }
+
+        public void FinishExam(Guid candidateId, Guid candidateTestId)
+        {
+            FetchCandidate(candidateId).FinishExam(candidateTestId);
         }
 
         #endregion
@@ -372,5 +471,12 @@ namespace Domain
 
         #endregion
 
+
+        public void Dispose()
+        {
+            People.Clear();
+            TestTemplates.Clear();
+            QuestionBank.Dispose();
+        }
     }
 }
