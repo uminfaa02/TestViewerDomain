@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal enum ExamState
+    public enum ExamState
     {
         Scheduled = 1,
         Active = 2,

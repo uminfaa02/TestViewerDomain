@@ -43,8 +43,28 @@ namespace Domain
         ITestTemplate TestTemplate { get;   }
 
         /// <summary>
+        /// Date Created
+        /// </summary>
+        DateTime DateCreated { get; }
+
+        /// <summary>
         /// Token ID which is also the access code.
         /// </summary>
         int TokenId { get;   }
+
+        /// <summary>
+        /// Exam's time limit (in minutes)
+        /// </summary>
+        int TimeLimit { get; }
+
+        /// <summary>
+        /// Test Instance is Open
+        /// </summary>
+        bool IsOpen { get; }
+
+        /// <summary>
+        /// Test Instance is Closed
+        /// </summary>
+        bool IsClosed { get; }
     }
 }

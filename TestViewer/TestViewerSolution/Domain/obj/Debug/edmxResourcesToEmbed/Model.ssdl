@@ -179,6 +179,8 @@
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="DevelopedBy" Type="varchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="EmailPassword" Type="nvarchar" Nullable="false" MaxLength="50" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

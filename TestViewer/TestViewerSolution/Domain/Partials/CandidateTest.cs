@@ -41,12 +41,19 @@ namespace Domain
             get { return TestInstance.TimeLimit; }
         }
 
+        public string State
+        {
+            get { return ((ExamState)StateId).ToString(); }
+        }
+
 
         public void SaveAnswer(Guid choiceId)
         {
             Answer answer = new Answer(choiceId);
             Answers.Add(answer);
         }
+
+        //TODO: Add UpdateAnswer(Guid choiceId, Guid newChoiceId)
 
         public void Activate()
         {
@@ -127,6 +134,5 @@ namespace Domain
 
         #endregion 
     
-
     }
 }

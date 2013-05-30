@@ -184,6 +184,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DevelopedBy" Type="varchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmailPassword" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -563,6 +565,8 @@
           <NavigationProperty Name="People" Relationship="Domain.FK_Person_TestViewer" FromRole="TestViewer" ToRole="Person" />
           <NavigationProperty Name="QuestionBank" Relationship="Domain.FK_QuestionBank_TestViewer" FromRole="TestViewer" ToRole="QuestionBank" />
           <NavigationProperty Name="TestTemplates" Relationship="Domain.FK_TestTemplate_TestViewer" FromRole="TestViewer" ToRole="TestTemplate" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EmailPassword" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_TestInstance_Administrator">
           <End Role="Administrator" Type="Domain.Administrator" Multiplicity="1" />
@@ -837,6 +841,8 @@
           <EntitySetMapping Name="TestViewers">
             <EntityTypeMapping TypeName="Domain.TestViewer">
               <MappingFragment StoreEntitySet="TestViewer">
+                <ScalarProperty Name="EmailPassword" ColumnName="EmailPassword" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DevelopedBy" ColumnName="DevelopedBy" />
               </MappingFragment>

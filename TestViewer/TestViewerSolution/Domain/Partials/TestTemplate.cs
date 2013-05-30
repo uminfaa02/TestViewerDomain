@@ -60,7 +60,7 @@ namespace Domain
         {
             get
             {
-                return TestInstances.FirstOrDefault(ti => ti.IsScheduled) != null ? true : false;
+                return TestInstances.FirstOrDefault(ti => ti.IsOpen) != null ? true : false;
             }
         }
 

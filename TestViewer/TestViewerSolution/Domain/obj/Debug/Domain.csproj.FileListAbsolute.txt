@@ -218,8 +218,14 @@ C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\
 C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
 C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
 C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
-C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
 C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
-C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.CodeAnalysisLog.xml
-C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.lastcodeanalysissucceeded
+C:\Users\George\Desktop\TestViewer 1.6\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll.config
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.XML
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.dll
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml

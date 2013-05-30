@@ -265,7 +265,7 @@ namespace Domain
         {
             var template = FetchTestTemplate(templateId);
 
-            if (!template.IsUsedInAScheduledTestInstance)
+            if (template.IsUsedInAScheduledTestInstance)
                 throw new BusinessRuleException("Unable to update Test Template because it is being used in a Test Instance");
 
             try
@@ -290,7 +290,7 @@ namespace Domain
         {
             var template = FetchTestTemplate(templateId);
 
-            if (!template.IsUsedInAScheduledTestInstance)
+            if (template.IsBeingUsedInTestInstance)
                 throw new BusinessRuleException("Unable to update Test Template because it is being used in a Test Instance");
 
             if (action == AddOrRemoveStatus.Add)

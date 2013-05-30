@@ -14,7 +14,15 @@ namespace Domain
     /// </summary>
     public class Facade : IDisposable
     {
-        private TestViewerEntities _context = new TestViewerEntities();        
+        private MailingSystem _mail;
+        private TestViewerEntities _context = new TestViewerEntities();
+
+
+        public Facade()
+        {
+            _mail = new MailingSystem(new MailAddress(TestViewer.Email, "TestViewer"), TestViewer.EmailPassword);
+        }
+
         private TestViewer TestViewer
         {
             get
@@ -133,18 +141,16 @@ namespace Domain
         }
 
         /// <summary>
-        /// Updates the candidate student number. Returns a BusinessRuleException if newStudentNumber exists.
+        /// Change Candidate's status into its opposite status
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="newStudentNumber"></param>
-        /// <returns>ICandidate</returns>
-        /// <exception cref="Domain.BusinessRuleException">When Candidate cannot be updated because it is already in the Candidate Test or New Student number is already being used by other candidate</exception>
-        /// <exception cref="Domain.RecordNotFoundException">When the Candidate that is going to be updated is not found</exception>
-        public ICandidate UpdateCandidate(Guid id, string newStudentNumber)
+        /// <param name="candidateId">Candidate ID</param>
+        /// <returns>IQUestion</returns>
+        /// <exception cref="Domain.RecordNotFoundException">When Candidate ID is not found</exception>
+        /// <exception cref="Domain.BusinessRuleException">When Candidate cannot be updated due to some reason</exception>
+        public void ChangeCandidateStatus(Guid candidateId)
         {
-            var candidate = TestViewer.UpdateCandidate(id, newStudentNumber);
+            TestViewer.ChangeCandidateStatus(candidateId);
             _context.SaveChanges();
-            return candidate;
         }
 
         /// <summary>
@@ -509,7 +515,10 @@ namespace Domain
         public ITestInstance CreateTestInstance(List<Guid> candidateIds, Guid administratorId, Guid templateId, bool isPractice, int timeLimit)
         {
             var result = TestViewer.CreateTestInstance(candidateIds, administratorId, templateId, isPractice, timeLimit);
+            string templateName = TestViewer.FetchTestTemplate(templateId).Name;
             
+            //send mail
+            _mail.SendMail(new MailAddress("dimitrios.missirlis@gmail.com"), "TestInstance has been created", "Test template: " + templateName + " has been created seccessfully on " + DateTime.Now);
             _context.SaveChanges();
             return result;
         }
@@ -703,9 +712,6 @@ namespace Domain
             SmtpClient _smtp;
             MailAddress _fromAddress;
             MailAddress _toAddress;
-
-            string _subject;
-            string _body;
             string _fromPassword;
 
 
@@ -719,12 +725,9 @@ namespace Domain
             /// <param name="toAddress">the addres its going to be send too</param>
             /// <param name="subject">subject</param>
             /// <param name="body">the body of the email</param>
-            public MailingSystem(MailAddress fromAddress, string fromPassword, MailAddress toAddress, string subject, string body)
+            public MailingSystem(MailAddress fromAddress, string fromPassword)
             {
                 _fromAddress = fromAddress;
-                _toAddress = toAddress;
-                _subject = subject;
-                _body = body;
                 _fromPassword = fromPassword;
 
                 _smtp = new SmtpClient
@@ -738,19 +741,29 @@ namespace Domain
                 };
             }
 
-            public void SendMail()
+            public void SendMail(MailAddress toAddress, string subject, string body)
             {
-                using (var message = new MailMessage(_fromAddress, _toAddress)
+                using (var message = new MailMessage(_fromAddress, toAddress)
                 {
-                    Subject = _subject,
-                    Body = _body
+                    Subject = subject,
+                    Body = body
                 })
                 {
-                    _smtp.Send(message);
+                    try
+                    {
+                        _smtp.Send(message);
+                    }
+                    catch (SmtpFailedRecipientException)
+                    {
+
+                        // need to implement treading here.
+                        // ex.FailedRecipient and ex.GetBaseException()
+                    }
+
+
                 }
             }
-        }
-        
+        } 
 
         /// <summary>
         /// Disposes the facade and all its resources

@@ -70,14 +70,19 @@ namespace Domain
 
         public void DeleteCandidateTest(Action action, CandidateTest candidateTest)
         {
-            if (!IsScheduled)
+            if (!IsOpen)
             {
                 throw new BusinessRuleException("Unable to delete Candidate Test once the Test Instance has been set to Open");
             }
             action();
         }
 
-        public bool IsScheduled
+        public DateTime DateCreated
+        {
+            get { return CandidateTests.Select(ct => ct.DateTime).FirstOrDefault(); }
+        }
+
+        public bool IsOpen
         {
             get { return CandidateTests.FirstOrDefault(ct => ct.StateId.Equals((int)ExamState.Scheduled)) != null ? true : false; }
         }
@@ -105,7 +110,6 @@ namespace Domain
         }
 
         #endregion
-      
 
     }
 }

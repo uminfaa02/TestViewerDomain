@@ -20,7 +20,7 @@ namespace Domain
         public TestInstance UpdateTestInstance(Guid instanceId, TestTemplate newTestTemplate, bool isPractice, int timeLimit)
         {
             var result = FetchTestInstance(instanceId);
-            if (!result.IsScheduled)
+            if (!result.IsOpen)
             {
                 throw new BusinessRuleException("Unable to update once Test Instance is Open.");
             }
@@ -32,7 +32,7 @@ namespace Domain
 
         public void DeleteTestInstance(Action action, TestInstance testInstance)
         {
-            if (!testInstance.IsScheduled)
+            if (!testInstance.IsOpen)
             {
                 throw new BusinessRuleException("Unable to delete once Test Instance is Open.");
             }

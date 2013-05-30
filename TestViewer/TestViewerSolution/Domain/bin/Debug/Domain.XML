@@ -64,6 +64,11 @@
             Number of incorrect answers
             </summary>
         </member>
+        <member name="P:Domain.ICandidateTest.State">
+            <summary>
+            Exam State
+            </summary>
+        </member>
         <member name="T:Domain.IActualTest">
             <summary>
             An Interface that represents an Actual Candidate Test
@@ -299,15 +304,14 @@
             <exception cref="T:Domain.RecordNotFoundException">When the Candidate that is going to be updated is not found</exception>
             <exception cref="T:Domain.BusinessRuleException">When New Student Number is already being used by some Candidates</exception>
         </member>
-        <member name="M:Domain.Facade.UpdateCandidate(System.Guid,System.String)">
+        <member name="M:Domain.Facade.ChangeCandidateStatus(System.Guid)">
             <summary>
-            Updates the candidate student number. Returns a BusinessRuleException if newStudentNumber exists.
+            Change Candidate's status into its opposite status
             </summary>
-            <param name="id"></param>
-            <param name="newStudentNumber"></param>
-            <returns>ICandidate</returns>
-            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be updated because it is already in the Candidate Test or New Student number is already being used by other candidate</exception>
-            <exception cref="T:Domain.RecordNotFoundException">When the Candidate that is going to be updated is not found</exception>
+            <param name="candidateId">Candidate ID</param>
+            <returns>IQUestion</returns>
+            <exception cref="T:Domain.RecordNotFoundException">When Candidate ID is not found</exception>
+            <exception cref="T:Domain.BusinessRuleException">When Candidate cannot be updated due to some reason</exception>
         </member>
         <member name="M:Domain.Facade.ChangeCandidateStatus(System.Collections.Generic.List{System.Guid})">
             <summary>
@@ -628,7 +632,7 @@
             Source code from MailingSystem 1.5.10 which was supposed to be version 1.6
             </summary>
         </member>
-        <member name="M:Domain.Facade.MailingSystem.#ctor(System.Net.Mail.MailAddress,System.String,System.Net.Mail.MailAddress,System.String,System.String)">
+        <member name="M:Domain.Facade.MailingSystem.#ctor(System.Net.Mail.MailAddress,System.String)">
             <summary>
             Sends mail 
             </summary>
@@ -764,9 +768,29 @@
             Test Template information
             </summary>
         </member>
+        <member name="P:Domain.ITestInstance.DateCreated">
+            <summary>
+            Date Created
+            </summary>
+        </member>
         <member name="P:Domain.ITestInstance.TokenId">
             <summary>
             Token ID which is also the access code.
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.TimeLimit">
+            <summary>
+            Exam's time limit (in minutes)
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.IsOpen">
+            <summary>
+            Test Instance is Open
+            </summary>
+        </member>
+        <member name="P:Domain.ITestInstance.IsClosed">
+            <summary>
+            Test Instance is Closed
             </summary>
         </member>
         <member name="T:Domain.ITestTemplate">

@@ -61,6 +61,34 @@ internal partial class TestViewer
 			}
 		}
 
+	private string _email;
+    public  string Email 
+		{ 
+			get
+			{ 
+				return _email; 
+			} 
+			set
+			{
+				_email = value;
+				ObjectPropertyChanged("Email");
+			}
+		}
+
+	private string _emailpassword;
+    public  string EmailPassword 
+		{ 
+			get
+			{ 
+				return _emailpassword; 
+			} 
+			set
+			{
+				_emailpassword = value;
+				ObjectPropertyChanged("EmailPassword");
+			}
+		}
+
 
 
     public virtual ICollection<Person> People { get; set; }
