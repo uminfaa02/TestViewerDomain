@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Domain 
 {
@@ -15,12 +17,38 @@ namespace Domain
     public class Facade : IDisposable
     {
         private MailingSystem _mail;
+        private TestViewer _testViewer;
         private TestViewerEntities _context = new TestViewerEntities();
 
-
+        /// <summary>
+        /// Default for testing purposes and will be set to private soon.
+        /// </summary>
         public Facade()
         {
             _mail = new MailingSystem(new MailAddress(TestViewer.Email, "TestViewer"), TestViewer.EmailPassword);
+        }
+
+        /// <summary>
+        /// Use this constructor when administrator is trying to access the TestViewer
+        /// </summary>
+        /// <param name="administratorId">Administrator ID</param>
+        public Facade(Guid administratorId)
+        {
+            _testViewer = _context.TestViewers.Include("People").First();
+            if (TestViewer.FetchAdministrator(administratorId) == null)
+            {
+                throw new BusinessRuleException("Administrator cannot be found");
+            }
+        }
+
+        /// <summary>
+        /// Use this constructor when the candidate is going to take an exam.
+        /// </summary>
+        /// <param name="candidateTestId">Candidate ID</param>
+        /// <param name="studentNumber">Student Number</param>
+        public Facade(Guid candidateTestId, string studentNumber)
+        {
+           
         }
 
         private TestViewer TestViewer
@@ -38,6 +66,7 @@ namespace Domain
                     .Include("TestTemplates.TestInstances")
                     .Include("TestTemplates.TestInstances.CandidateTests")
                     .First();
+                //return _testViewer;
             }
         }
 
@@ -517,9 +546,14 @@ namespace Domain
             var result = TestViewer.CreateTestInstance(candidateIds, administratorId, templateId, isPractice, timeLimit);
             string templateName = TestViewer.FetchTestTemplate(templateId).Name;
             
-            //send mail
-            _mail.SendMail(new MailAddress("dimitrios.missirlis@gmail.com"), "TestInstance has been created", "Test template: " + templateName + " has been created seccessfully on " + DateTime.Now);
             _context.SaveChanges();
+
+            //start tread and send email 
+            Thread thread = new Thread(x => _mail.SendMail(new MailAddress("dimitrios.missirlis@gmail.com"), "TestInstance has been created", "Test template: " + templateName + " has been created seccessfully on " + DateTime.Now));
+
+            // I HAVE COMMENTED START THREAD OUT Because mailingsystem gives error while trying to send emails in tafe because server is blocked.
+            //thread.Start();
+
             return result;
         }
 
@@ -703,6 +737,7 @@ namespace Domain
 
         #endregion
 
+        #region Mail System
         /// <summary>
         /// A class responsible for sending an email.
         /// Source code from MailingSystem 1.5.10 which was supposed to be version 1.6
@@ -711,7 +746,6 @@ namespace Domain
         {
             SmtpClient _smtp;
             MailAddress _fromAddress;
-            MailAddress _toAddress;
             string _fromPassword;
 
 
@@ -722,9 +756,6 @@ namespace Domain
             /// </summary>
             /// <param name="fromAddress">The addres that the mail is going to be send by</param>
             /// <param name="fromPassword">The password for the address</param>
-            /// <param name="toAddress">the addres its going to be send too</param>
-            /// <param name="subject">subject</param>
-            /// <param name="body">the body of the email</param>
             public MailingSystem(MailAddress fromAddress, string fromPassword)
             {
                 _fromAddress = fromAddress;
@@ -752,6 +783,7 @@ namespace Domain
                     try
                     {
                         _smtp.Send(message);
+
                     }
                     catch (SmtpFailedRecipientException)
                     {
@@ -763,7 +795,8 @@ namespace Domain
 
                 }
             }
-        } 
+        }
+        #endregion
 
         /// <summary>
         /// Disposes the facade and all its resources

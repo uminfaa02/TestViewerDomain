@@ -117,7 +117,7 @@ namespace Domain
                 {
                     throw new BusinessRuleException("Cannot change current candidate student number with '" +
                     newStudentNumber + "' because it is already being used by other candidate.");
-                }
+                } 
             }
             catch (RecordNotFoundException)
             {
@@ -130,7 +130,7 @@ namespace Domain
         {
             var candidate = UpdateCandidate(id, newStudentNumber);
             ChangeCandidateStatus(candidate, isActive);
-
+            
             return candidate;
         }
 
@@ -475,8 +475,8 @@ namespace Domain
         public void Dispose()
         {
             People.Clear();
-            TestTemplates.Clear();
-            QuestionBank.Dispose();
+            //TestTemplates.Clear();
+            //QuestionBank.Dispose();
         }
     }
 }

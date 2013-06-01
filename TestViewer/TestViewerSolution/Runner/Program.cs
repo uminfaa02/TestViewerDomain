@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
+using System.Diagnostics;
 
 namespace Runner
 {
@@ -11,7 +12,7 @@ namespace Runner
     {
         static void Main(string[] args)
         {
-            var facade = new Facade();
+            //var facade = new Facade();
             
             try
             {
@@ -62,9 +63,15 @@ namespace Runner
                 //facade.OpenTestInstance(new Guid("0e8b57a3-40ba-467e-92a2-086ccae9f69b"), 
                 //                        new Guid("ac513d6c-c0f9-4c10-a538-85a6c38d6052"));
 
-                var exam = facade.GetExam("1111111111", 1001);
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
+                //var exam = facade.GetExam("1111111111", 1001);
+                //sw.Stop();
+                //Console.WriteLine("Method GetExam Processing time: {0}", sw.Elapsed);
                 //facade.SaveAnswer(exam.CandidateId, exam.Id, 
 
+                //facade.UpdateCandidate(new Guid("6d7511da-40b3-490e-9a5a-558c1c71ef7c"), "3334445556", true);
+                
 
 
 
@@ -86,7 +93,7 @@ namespace Runner
             }
             finally
             {
-                facade.Dispose();
+                //facade.Dispose();
                 Console.WriteLine("Facade object is disposed.");
                 Console.ReadLine();
             }

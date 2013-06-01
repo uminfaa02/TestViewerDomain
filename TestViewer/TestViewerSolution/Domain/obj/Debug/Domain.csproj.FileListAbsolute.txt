@@ -229,3 +229,4 @@ C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bi
 C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\Domain.pdb
 C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.dll
 C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\bin\Debug\EntityFramework.xml
+C:\Users\George\Desktop\TestViewer 1.6.1\TestViewer\TestViewerSolution\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache

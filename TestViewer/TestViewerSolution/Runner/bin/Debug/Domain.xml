@@ -229,6 +229,31 @@
             Choice text
             </summary>
         </member>
+        <member name="T:Domain.ExamState">
+            <summary>
+            Particular candidate's exam state
+            </summary>
+        </member>
+        <member name="F:Domain.ExamState.Scheduled">
+            <summary>
+            The Exam is created but not open for access by the candidates
+            </summary>
+        </member>
+        <member name="F:Domain.ExamState.Active">
+            <summary>
+            The Exam is open for access by the candidates
+            </summary>
+        </member>
+        <member name="F:Domain.ExamState.InProgress">
+            <summary>
+            The Candidate started answering exam questions
+            </summary>
+        </member>
+        <member name="F:Domain.ExamState.Closed">
+            <summary>
+            The Exam is closed and no longer be available for access by the candidates
+            </summary>
+        </member>
         <member name="T:Domain.RecordNotFoundException">
             <summary>
             An Exception class that throws when a particular record is not found
@@ -244,6 +269,24 @@
             <summary>
             This class is the main interface of the TestViewer
             </summary>
+        </member>
+        <member name="M:Domain.Facade.#ctor">
+            <summary>
+            Default for testing purposes and will be set to private soon.
+            </summary>
+        </member>
+        <member name="M:Domain.Facade.#ctor(System.Guid)">
+            <summary>
+            Use this constructor when administrator is trying to access the TestViewer
+            </summary>
+            <param name="administratorId">Administrator ID</param>
+        </member>
+        <member name="M:Domain.Facade.#ctor(System.Guid,System.String)">
+            <summary>
+            Use this constructor when the candidate is going to take an exam.
+            </summary>
+            <param name="candidateTestId">Candidate ID</param>
+            <param name="studentNumber">Student Number</param>
         </member>
         <member name="M:Domain.Facade.FetchAdministrator(System.Guid)">
             <summary>
@@ -638,9 +681,6 @@
             </summary>
             <param name="fromAddress">The addres that the mail is going to be send by</param>
             <param name="fromPassword">The password for the address</param>
-            <param name="toAddress">the addres its going to be send too</param>
-            <param name="subject">subject</param>
-            <param name="body">the body of the email</param>
         </member>
         <member name="T:Domain.BusinessRuleException">
             <summary>
